@@ -151,7 +151,7 @@ M002,magic,神秘力量,
     "card_id": "M002",
     "asset_type": "magic",
     "final_prompt": "an arcane vortex spell effect, … , game-ready card illustration",
-    "negative_prompt": "…, character portrait focus, face close-up, dull flat lighting",
+    "negative_prompt": "…, character portrait focus, face close-up, indistinct effect silhouette",
     "aspect_ratio": "2:3",
     "suggested_loras": { "style": { "file": "", "weight": null, "status": "reserved" }, "magic": { "file": "", "weight": null, "status": "reserved" }, "assets": [] },
     "needs_confirmation": true,
@@ -177,8 +177,8 @@ T104,magic,雷槍,從天而降的雷電長槍擊中地面
 - `generated: 4`、`needs_confirmation: 0`、`errors: 0`
 - 每列的 `final_prompt` 都逐字包含 `style_lock.style`、該類型的 `style_append`、`framing_override` 與 `style_lock.quality`
 - T103 的 framing 用 scene override（含 `single dominant landmark filling much of the frame`），不含全域 `framing`
-- T102 的 `final_prompt` 含殘影 framing（`translucent oversized double-exposure echo`），`negative_prompt` 含 weapon 追加詞（`hands, … weapon pile, weapon rack`）
-- 每列 `final_prompt` 都有一句 `… color scheme with … accent glow`
+- T102 的 `final_prompt` 使用對角擺放與主題環境 framing，不含背景武器殘影；`negative_prompt` 含 weapon 追加詞（包括 `double-exposure weapon echo, duplicate weapon silhouette, oversized weapon shadow in the background`）
+- 每列 `final_prompt` 都有一句 `… color scheme with … accents`
 - 每列都有 `chatgpt_prompt`，內容是 `final_prompt` + `Avoid: <negative_prompt>` + 比例文字，且 4 張都出現在 `batch_chatgpt.md`
 - CSV 可被 Excel 正常開啟，中文 `notes` 不亂碼
 
@@ -215,3 +215,4 @@ T305,magic,,
 - T303（第 5 行）：`card_id` 重複 → 錯誤
 - T305：`name` 與 `extra_description` 都空 → 錯誤
 - `generated: 1`、`errors: 4`；錯誤列不出現在 `items`，只出現在 `errors` 與報告
+

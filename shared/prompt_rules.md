@@ -62,8 +62,10 @@
 撰寫 1–4（skill 負責的部分）時：
 - 一律英文，使用逗號分隔的具體視覺短語；建議 25–70 個英文單字，避免稀釋風格。
 - 不得與鎖定字串矛盾（例：`muted desaturated palette`、`dark gloomy`、`photorealistic`、`chibi`、`plain white background`、`text`）。
-- **配色寫法**：style lock 要求 `element-themed color scheme with complementary accent glow`，所以每張都要寫一句 `[主色系] color scheme with [互補色] accent glow`。主色系由元素／陣營／題材決定，互補色只當點綴發光。例：冰元素 → `icy blue and white color scheme with warm gold accent glow`；火元素 → `blazing orange and crimson color scheme with teal accent glow`。
-- 不要重複 style lock 已有的詞（例如 `bloom`、`rim light`、`star glints`、`speed lines`），把字數留給主體與細節。
+- **配色寫法**：每張寫一句 `[主色系] color scheme with [互補色] accents`。主色系依元素／陣營／題材決定；互補色可用於布料、塗裝、鑲嵌、材質或環境色，不代表自發光。例：冰元素 → `icy blue and white color scheme with warm gold accents`；火元素 → `blazing orange and crimson color scheme with teal accents`。
+- 不要重複 style lock 已有的畫風與照明字串，把字數留給主體、材質及具體光源。
+- **發光與反光分開處理**：金屬、寶石、冰雪的反光不等於自發光。僅在使用者要求或題材確有光源時寫入局部發光，並說明來源與照亮範圍；火焰、雷電、聖光可發光，普通角色、武器、建築不自動添加光暈、符文陣或星芒。土、風、水等魔法可用形狀、材質與運動表現，不強制發光。
+- **柔和不等於灰暗**：保留鮮豔配色與清楚明暗；避免過曝與滿屏泛光，讓材質、輪廓與魔法核心仍可辨識。依地點與時段使用日光、月光或其他合理光源。
 - 不在正向 prompt 寫否定句（`no people`、`without wings`）；排除項一律放負面 prompt。（鎖定的 framing 字串內的 `no text` 等照抄，屬例外。）
 - 不使用真實藝術家姓名、既有遊戲／作品／品牌名稱、既有角色名稱。
 - 卡名或專有名詞**不直接放進 prompt**（模型可能畫出文字或誤解）；只取其語意轉成視覺描述。
@@ -252,3 +254,4 @@ Aspect ratio: <比例文字>
 - 不要把 `data/references/` 的參考圖上傳給 ChatGPT 當風格參考：那些是既有遊戲的官方卡圖，生成結果太接近會有商用風險。
 - 生成後把圖放進 `output/images/`，可請 agent 與參考圖比對、調整 prompt。
 - `suggested_loras` 在 ChatGPT 中無作用，忽略即可。
+

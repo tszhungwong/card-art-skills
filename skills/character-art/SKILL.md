@@ -47,8 +47,8 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
 | `weapon_prop` | 武器或道具 | | 依職業補全；使用者指定的道具保留原物，只補材質細節 |
 | `pose` | 姿勢 | | 有動勢、剪影清楚；可讓一隻手伸向鏡頭；不遮臉 |
 | `expression` | 表情 | | 依陣營與個性，預設偏有活力（confident grin, bright smile, fierce glare…） |
-| `element_faction` | 元素或陣營 | | 依道具、服裝、用詞推定，並寫出配色句：`[主色系] color scheme with [互補色] accent glow`（`prompt_rules.md` §3） |
-| `background_magic` | 背景魔法效果 | | 與元素一致的效果（runic circle, embers, frost sparkles），不搶主體 |
+| `element_faction` | 元素或陣營 | | 依道具、服裝、用詞推定，並寫出配色句：`[主色系] color scheme with [互補色] accents`（`prompt_rules.md` §3） |
+| `background_magic` | 背景魔法效果 | | 可為空字串；僅在角色正在施法或題材需要時補少量局部效果，不預設符文陣、星芒或發光粒子；普通角色用環境背景 |
 | `framing` | 構圖 | | 預設 `half-body`；使用者說全身，或需要展示全套裝備／站姿時用 `full-body` |
 
 **核心規則：** `race_type` 與 `role` 至少要能判斷一項，否則需確認。
@@ -88,11 +88,11 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
 | 種族／角色類型 | 獸人（orc） | 使用者 |
 | 職業或身份 | 部落薩滿（tribal shaman） | 自動補全 |
 | 服裝 | 層疊獸皮披肩、骨珠項鍊、金邊深紅儀式腰帶、鑲橘色寶石的皮護腕 | 自動補全 |
-| 武器或道具 | 魔法棒：扭曲木質魔杖，頂端鑲發光的多切面火焰水晶 | 使用者＋細節補全 |
+| 武器或道具 | 魔法棒：扭曲木質魔杖，頂端鑲帶有克制內光的多切面火焰水晶 | 使用者＋細節補全 |
 | 姿勢 | 單手高舉魔杖，另一手伸向鏡頭引導魔力 | 自動補全 |
 | 表情 | 自信凶狠的咧嘴笑、獠牙外露 | 自動補全 |
-| 元素或陣營 | 火元素；橘紅與深紅主色系，青綠互補發光 | 自動補全 |
-| 背景魔法效果 | 肩後旋繞的火星與發光符文陣 | 自動補全 |
+| 元素或陣營 | 火元素；橘紅與深紅主色系，青綠互補色點綴 | 自動補全 |
+| 背景魔法效果 | 杖尖附近少量火星，背景為柔焦岩地 | 自動補全 |
 | 構圖 | 直向 2:3 半身立繪 | 預設 |
 
 ```json
@@ -106,11 +106,11 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
     "race_type": "orc, grey-green skin, prominent tusks",
     "role": "tribal shaman",
     "outfit": "layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones",
-    "weapon_prop": "gnarled wooden magic wand topped with a glowing faceted fire crystal",
+    "weapon_prop": "gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow",
     "pose": "raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy",
     "expression": "fierce confident grin, bared tusks",
-    "element_faction": "fire element, blazing orange and crimson color scheme with teal accent glow",
-    "background_magic": "swirling embers and a glowing runic circle behind the shoulders",
+    "element_faction": "fire element, blazing orange and crimson color scheme with teal accents",
+    "background_magic": "a few embers near the wand tip against a softly blurred rocky backdrop",
     "framing": "half-body"
   },
   "auto_filled": ["role", "outfit", "pose", "expression", "element_faction", "background_magic", "framing"],
@@ -119,9 +119,9 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
     "「魔法棒」保留為小型 magic wand，未改成大型法杖。"
   ],
   "matched_assets": [],
-  "positive_prompt": "a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a glowing faceted fire crystal, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accent glow, swirling embers and a glowing runic circle behind the shoulders, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, glossy hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with bokeh and sparkles, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
-  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, chibi, super deformed",
-  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a glowing faceted fire crystal, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accent glow, swirling embers and a glowing runic circle behind the shoulders, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, glossy hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with bokeh and sparkles, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "positive_prompt": "a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accents, a few embers near the wand tip against a softly blurred rocky backdrop, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, soft hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed",
+  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accents, a few embers near the wand tip against a softly blurred rocky backdrop, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, soft hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
   "aspect_ratio": "2:3",
   "resolution_hint": "832x1216",
   "suggested_loras": {
@@ -130,8 +130,8 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
     "assets": []
   },
   "lock_exceptions": [],
-  "style_lock_version": "0.2.0",
-  "negative_lock_version": "0.2.0"
+  "style_lock_version": "0.3.0",
+  "negative_lock_version": "0.3.0"
 }
 ```
 
@@ -139,9 +139,9 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
 ```text
 Create an image from this prompt, used as written:
 
-a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a glowing faceted fire crystal, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accent glow, swirling embers and a glowing runic circle behind the shoulders, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, glossy hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with bokeh and sparkles, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
+a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accents, a few embers near the wand tip against a softly blurred rocky backdrop, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, soft hair highlights, gold trim and gemstone accents, dynamic diagonal composition, character fills the frame, softly blurred thematic background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
 
-Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, chibi, super deformed
+Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed
 
 Aspect ratio: 2:3 portrait (1024x1536)
 ```
@@ -159,7 +159,7 @@ Aspect ratio: 2:3 portrait (1024x1536)
 - 未指定性別 → prompt 不寫性別
 - composition 使用 full-body 模板；`aspect_ratio: "2:3"`
 - 預期 prompt 前段（後面接固定的 style、style_append、framing、quality）：
-  `a slender elf archer, long silver hair, pointed ears, fitted leather armor with gold trim and blue gemstone clasps, flowing hooded cloak, longbow of pale carved wood, quiver of fletched arrows, poised stance with an arrow half drawn, calm piercing gaze, moon faction, silver and moonlight blue color scheme with soft violet accent glow, cold moonlight from behind, drifting silver motes behind the figure, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
+  `a slender elf archer, long silver hair, pointed ears, fitted leather armor with gold trim and blue gemstone clasps, flowing hooded cloak, longbow of pale carved wood, quiver of fletched arrows, poised stance with an arrow half drawn, calm piercing gaze, moon faction, silver and moonlight blue color scheme with soft violet accents, cold moonlight from behind, softly lit woodland behind the figure, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
 
 ### 測試 2：模糊輸入（需確認）
 
@@ -168,7 +168,7 @@ Aspect ratio: 2:3 portrait (1024x1536)
 **預期：**
 - `needs_confirmation: true`；原因：`race_type` 與 `role` 都無法判斷
 - **不輸出最終 prompt**
-- 輸出「預計補全設定」表，例如：human／銀白板甲騎士（silver plate armor with gold trim, crimson cape）／發光巨劍／持劍前指的姿勢／自信表情／光元素（金白主色系、天藍互補發光）／身後的光之符文陣／半身 2:3
+- 輸出「預計補全設定」表，例如：human／銀白板甲騎士（silver plate armor with gold trim, crimson cape）／鋼製巨劍／持劍前指的姿勢／自信表情／光元素（金白主色系、天藍互補色點綴）／柔和日光下的神殿背景／半身 2:3
 - 最多問 3 個問題：1) 種族或角色類型？ 2) 職業或戰鬥風格？ 3) 偏好的元素或陣營？
 - 使用者回覆「確認」或修改後，才產生完整輸出
 
@@ -183,3 +183,4 @@ Aspect ratio: 2:3 portrait (1024x1536)
   3. 卡名文字 ↔ framing `no text` → 不提供例外；卡名應在卡框排版階段加入
 - 不可默默刪除 `multiple characters`，prompt 不可出現 `chibi`，不可把「炎之誓約」字樣放進 prompt
 - 使用者選 A 後：輸出單一騎士 prompt，可取「炎之誓約」的語意補全為 fire oath knight
+

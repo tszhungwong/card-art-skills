@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "version": "0.2.0",
+    "version": "0.3.1",
     "locked": true,
-    "last_updated": "2026-11-06",
+    "last_updated": "2026-11-07",
     "role": "Single source of truth for negative prompts. Every skill reads negatives from this file, never from style_lock.json.",
     "edit_policy": "Read-only for every skill and agent. Edit only when the user explicitly asks. `negative` must stay identical to shared/style_lock.json -> negative; update both files together.",
     "changelog": [
@@ -15,14 +15,25 @@
         "version": "0.2.0",
         "date": "2026-11-06",
         "change": "Applied Option A from reference analysis (user-approved): `negative` synced with style_lock v0.2.0; character adds chibi/super deformed; weapon swaps 'multiple weapons' for 'weapon pile' so the double-exposure echo is allowed; scene drops 'character' so incidental creatures are allowed and adds 'human figure'."
+      },
+      {
+        "version": "0.3.0",
+        "date": "2026-11-07",
+        "change": "新增過度泛光、過曝高光、過量裝飾星芒與非發光表面光邊的排除詞；魔法改排除輪廓不清，允許柔和照明；全域 negative 與 style lock 同步。"
+      },
+      {
+        "version": "0.3.1",
+        "date": "2026-11-07",
+        "change": "依使用者要求新增武器專用排除詞：雙重曝光殘影、重複武器剪影與背景放大武器影子。"
       }
     ]
   },
-  "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render",
+  "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces",
   "append_by_type": {
     "character": "chibi, super deformed",
-    "weapon": "person, character, hands, hand holding weapon, wielder, weapon pile, weapon rack",
+    "weapon": "person, character, hands, hand holding weapon, wielder, weapon pile, weapon rack, double-exposure weapon echo, duplicate weapon silhouette, oversized weapon shadow in the background",
     "scene": "people, crowd, human figure, close-up portrait, flat empty background",
-    "magic": "character portrait focus, face close-up, dull flat lighting"
+    "magic": "character portrait focus, face close-up, indistinct effect silhouette"
   }
 }
+

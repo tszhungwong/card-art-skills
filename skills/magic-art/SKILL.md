@@ -23,8 +23,8 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
 ## 2. 必須讀取的共用檔案
 
 每次執行前重新讀取：
-1. `shared/style_lock.json`（唯讀）：`style`、`quality`、`by_type.magic`（`style_append` 與 `framing_override`；白熱核心、速度線、動態模糊背景都由這裡固定提供）
-2. `shared/negative_lock.json`（唯讀）：`negative`、`append_by_type.magic`（排除角色特寫、平光）
+1. `shared/style_lock.json`（唯讀）：`style`、`quality`、`by_type.magic`（`style_append` 與 `framing_override`；核心細節、亮度控制與背景處理由這裡統一提供，並非所有元素都自發光）
+2. `shared/negative_lock.json`（唯讀）：`negative`、`append_by_type.magic`（排除角色特寫與難以辨識的特效輪廓）
 3. `shared/assets.json`：`magic_effects`、`loras.style`、`loras.magic`
 4. `shared/prompt_rules.md`
 
@@ -42,9 +42,9 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
 |---|---|---|---|
 | `element` | 魔法元素 | ★ | fire, frost, lightning, shadow, holy light, poison, arcane, earth, wind, water… |
 | `form` | 效果形態 | ★ | burst, vortex, beam, spear, shield dome, chains, summoning circle, meteor rain… |
-| `color` | 顏色 | | 配色句：`[元素主色系] color scheme with [互補色] accent glow` |
-| `lighting` | 光線 | | 特效本身是主光源，寫出它照亮了什麼（surrounding smoke, cracked ground, the creature's silhouette） |
-| `particles_runes` | 粒子或符文 | | embers, sparks, ice shards, glyph rings, runic circle…，數量適中 |
+| `color` | 顏色 | | 配色句：`[元素主色系] color scheme with [互補色] accents` |
+| `lighting` | 光線 | | 依元素決定：火、雷、聖光可作局部主光源，寫明照亮範圍並保留核心細節；土、風、水等預設接受環境光，不強制白熱核心或自發光 |
+| `particles_runes` | 粒子或符文 | | 依題材選擇少量 embers、ice shards 或 debris；可為空字串，不為裝飾自動添加發光符文或星芒 |
 | `source` | 施法來源 | | 預設無可見施法者：魔法陣、地面、天空裂縫、法器尖端；要有施法者時只露手或背光剪影 |
 | `creature` | 相關生物（選填） | | 施法者、受術者或特效化身的生物（phoenix, thunder beast, sea serpent）；體型可大，但要融入或位於特效中，不可成為特寫主角 |
 | `background` | 背景 | | 一句環境暗示（storm clouds, ocean surface, cavern, battlefield）；暗色、動態模糊由 framing 提供 |
@@ -84,10 +84,10 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
 |---|---|---|
 | 魔法元素 | 火焰 | 使用者 |
 | 效果形態 | 爆發：從單一點向外的放射狀火焰噴發 | 使用者＋細節補全 |
-| 顏色 | 熾橘與深紅主色系，電光藍互補發光 | 自動補全 |
-| 光線 | 噴發是主光源，照亮周圍煙霧 | 自動補全 |
-| 粒子或符文 | 飛散的火星、熔融液滴、旋轉的火焰符文 | 自動補全 |
-| 施法來源 | 焦土上碎裂發光的符文陣 | 自動補全 |
+| 顏色 | 熾橘與深紅主色系，電光藍互補色點綴 | 自動補全 |
+| 光線 | 火焰照亮附近煙霧，亮度受控且火焰內層清楚 | 自動補全 |
+| 粒子或符文 | 少量飛散火星與熔融液滴 | 自動補全 |
+| 施法來源 | 焦土上碎裂的符文陣 | 自動補全 |
 | 相關生物 | 無 | 預設 |
 | 背景 | 煙霧瀰漫的焦土戰場 | 自動補全 |
 | 構圖 | 直向 2:3，效果居中 | 預設 |
@@ -102,10 +102,10 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
   "fields": {
     "element": "fire",
     "form": "burst, explosive radial eruption of flames bursting outward from a single point",
-    "color": "blazing orange and crimson color scheme with electric blue accent glow",
-    "lighting": "the eruption as the main light source illuminating the surrounding smoke",
-    "particles_runes": "flying embers, molten droplets and spinning fire glyphs",
-    "source": "erupting from a fractured glowing runic circle on scorched ground",
+    "color": "blazing orange and crimson color scheme with electric blue accents",
+    "lighting": "the flames lighting nearby smoke with controlled brightness and visible inner flame layers",
+    "particles_runes": "a few flying embers and molten droplets",
+    "source": "erupting from a fractured runic circle on scorched ground",
     "creature": "",
     "background": "smoky scorched battlefield in the background",
     "framing": "vertical, effect centered"
@@ -113,9 +113,9 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
   "auto_filled": ["color", "lighting", "particles_runes", "source", "creature", "background", "framing"],
   "assumptions": ["未指定施法者或生物：以地面符文陣作為施法來源，不畫角色或生物。若想加入火鳥等化身，請告訴我。"],
   "matched_assets": [],
-  "positive_prompt": "a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accent glow, the eruption as the main light source illuminating the surrounding smoke, flying embers, molten droplets and spinning fire glyphs, erupting from a fractured glowing runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime-style magic VFX, crisp sharp-edged energy shapes, manga speed lines, white-hot overexposed core with intense bloom, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
-  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, character portrait focus, face close-up, dull flat lighting",
-  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accent glow, the eruption as the main light source illuminating the surrounding smoke, flying embers, molten droplets and spinning fire glyphs, erupting from a fractured glowing runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime-style magic VFX, crisp sharp-edged energy shapes, manga speed lines, white-hot overexposed core with intense bloom, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, character portrait focus, face close-up, dull flat lighting\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "positive_prompt": "a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accents, the flames lighting nearby smoke with controlled brightness and visible inner flame layers, a few flying embers and molten droplets, erupting from a fractured runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, character portrait focus, face close-up, indistinct effect silhouette",
+  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accents, the flames lighting nearby smoke with controlled brightness and visible inner flame layers, a few flying embers and molten droplets, erupting from a fractured runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, character portrait focus, face close-up, indistinct effect silhouette\n\nAspect ratio: 2:3 portrait (1024x1536)",
   "aspect_ratio": "2:3",
   "resolution_hint": "832x1216",
   "suggested_loras": {
@@ -124,8 +124,8 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
     "assets": []
   },
   "lock_exceptions": [],
-  "style_lock_version": "0.2.0",
-  "negative_lock_version": "0.2.0"
+  "style_lock_version": "0.3.0",
+  "negative_lock_version": "0.3.0"
 }
 ```
 
@@ -133,9 +133,9 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
 ```text
 Create an image from this prompt, used as written:
 
-a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accent glow, the eruption as the main light source illuminating the surrounding smoke, flying embers, molten droplets and spinning fire glyphs, erupting from a fractured glowing runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art, anime-style magic VFX, crisp sharp-edged energy shapes, manga speed lines, white-hot overexposed core with intense bloom, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
+a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accents, the flames lighting nearby smoke with controlled brightness and visible inner flame layers, a few flying embers and molten droplets, erupting from a fractured runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element, explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
 
-Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, character portrait focus, face close-up, dull flat lighting
+Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, character portrait focus, face close-up, indistinct effect silhouette
 
 Aspect ratio: 2:3 portrait (1024x1536)
 ```
@@ -151,7 +151,7 @@ Aspect ratio: 2:3 portrait (1024x1536)
 - `element` = lightning、`form` = 長槍形雷擊（使用者）；施法來源補為天空中裂開的雲層
 - 直向 2:3 正好符合由上而下的動線
 - 預期 prompt 前段：
-  `a lightning spear spell effect, a massive spear-shaped bolt of lightning plunging from the sky and striking the ground, electric yellow and white color scheme with violet accent glow, the impact flash lighting up the cracked earth, scattering sparks and shattered rock fragments, glowing runes branching across the ground from the impact point, descending from a split in dark storm clouds, stormy sky in the background, vertical composition, spell effect as the central focal point, clear readable shape of the spear, energy radiating outward from the center`
+  `a lightning spear spell effect, a massive spear-shaped bolt of lightning plunging from the sky and striking the ground, electric yellow and white color scheme with violet accents, the impact flash lighting up the cracked earth, scattering sparks and shattered rock fragments, charred fissures branching across the ground from the impact point, descending from a split in dark storm clouds, stormy sky in the background, vertical composition, spell effect as the central focal point, clear readable shape of the spear, energy radiating outward from the center`
 
 ### 測試 2：模糊輸入（需確認）
 
@@ -160,7 +160,7 @@ Aspect ratio: 2:3 portrait (1024x1536)
 **預期：**
 - `needs_confirmation: true`；原因：`element` 與 `form` 都無法判斷
 - **不輸出最終 prompt**
-- 輸出「預計補全設定」表，例如：暗影元素／漩渦／深紫與洋紅主色系、金色互補發光／地面魔法陣／2:3
+- 輸出「預計補全設定」表，例如：暗影元素／漩渦／深紫與洋紅主色系、金色互補色點綴／地面魔法陣／2:3
 - 問題（最多 3 個）：1) 元素？ 2) 效果形態（爆發、光束、護盾、召喚陣…）？ 3) 要不要加入生物化身？
 
 ### 測試 3：skill 歸屬不明
@@ -173,3 +173,4 @@ Aspect ratio: 2:3 portrait (1024x1536)
   - A（建議）：維持 `magic-art`，治癒光柱為主體，法師在下方呈背光半身剪影，臉部可見但佔畫面比例小（不違反 `face close-up`，不需要例外）
   - B：改用 `character-art`，法師為主體，治癒光作為 `background_magic`
 - 不可默默把法師臉部特寫放進 magic prompt
+
