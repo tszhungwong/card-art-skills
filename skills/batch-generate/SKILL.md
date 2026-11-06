@@ -169,7 +169,7 @@ M002,magic,神秘力量,
 ```csv
 card_id,asset_type,name,extra_description
 T101,character,精靈弓箭手,銀髮，全身，站在月光下
-T102,weapon,裂焰巨劍,纏繞黑色火焰的巨劍，劍身有裂痕
+T102,weapon,裂焰巨劍,騎士持握，以巨劍為主體，纏繞黑色火焰的巨劍，劍身有裂痕
 T103,scene,空中城堡,漂浮在雲海上的城堡
 T104,magic,雷槍,從天而降的雷電長槍擊中地面
 ```
@@ -178,6 +178,7 @@ T104,magic,雷槍,從天而降的雷電長槍擊中地面
 - 每列的 `final_prompt` 都逐字包含 `style_lock.style`、該類型的 `style_append`、`framing_override` 與 `style_lock.quality`
 - T103 的 framing 用 scene override（含 `single dominant landmark filling much of the frame`），不含全域 `framing`
 - T102 的 `final_prompt` 使用對角擺放與主題環境 framing，不含背景武器殘影；`negative_prompt` 含 weapon 追加詞（包括 `double-exposure weapon echo, duplicate weapon silhouette, oversized weapon shadow in the background`）
+- T102 保留騎士持握、黑色火焰與裂痕；持有者是陪襯，持握不觸發確認或 lock_exceptions，負面 prompt 不排除人物或手。
 - 每列 `final_prompt` 都有一句 `… color scheme with … accents`
 - 每列都有 `chatgpt_prompt`，內容是 `final_prompt` + `Avoid: <negative_prompt>` + 比例文字，且 4 張都出現在 `batch_chatgpt.md`
 - CSV 可被 Excel 正常開啟，中文 `notes` 不亂碼

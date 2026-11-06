@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "0.3.1",
+    "version": "0.3.2",
     "locked": true,
     "last_updated": "2026-11-07",
     "role": "Single source of truth for negative prompts. Every skill reads negatives from this file, never from style_lock.json.",
@@ -25,13 +25,18 @@
         "version": "0.3.1",
         "date": "2026-11-07",
         "change": "依使用者要求新增武器專用排除詞：雙重曝光殘影、重複武器剪影與背景放大武器影子。"
+      },
+      {
+        "version": "0.3.2",
+        "date": "2026-11-07",
+        "change": "依使用者要求允許人物持握武器；移除武器專用 person、character、hands、hand holding weapon、wielder 排除詞，保留武器主體與背景殘影排除規則。"
       }
     ]
   },
   "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces",
   "append_by_type": {
     "character": "chibi, super deformed",
-    "weapon": "person, character, hands, hand holding weapon, wielder, weapon pile, weapon rack, double-exposure weapon echo, duplicate weapon silhouette, oversized weapon shadow in the background",
+    "weapon": "weapon pile, weapon rack, double-exposure weapon echo, duplicate weapon silhouette, oversized weapon shadow in the background",
     "scene": "people, crowd, human figure, close-up portrait, flat empty background",
     "magic": "character portrait focus, face close-up, indistinct effect silhouette"
   }
