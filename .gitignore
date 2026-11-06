@@ -1,0 +1,12 @@
+# 參考圖：既有遊戲的官方卡圖，有版權，只留在本機做風格分析，不進 repo
+data/references/*/*
+!data/references/*/.gitkeep
+
+# 生成的圖片：檔案大，之後要收可改用 Git LFS
+output/images/*
+!output/images/.gitkeep
+
+# 系統檔
+Thumbs.db
+desktop.ini
+.DS_Store

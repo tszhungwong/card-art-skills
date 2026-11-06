@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "version": "0.2.0",
+    "locked": true,
+    "last_updated": "2026-11-06",
+    "role": "Single source of truth for negative prompts. Every skill reads negatives from this file, never from style_lock.json.",
+    "edit_policy": "Read-only for every skill and agent. Edit only when the user explicitly asks. `negative` must stay identical to shared/style_lock.json -> negative; update both files together.",
+    "changelog": [
+      {
+        "version": "0.1.0",
+        "date": "2026-11-06",
+        "change": "Initial: `negative` copied verbatim from style_lock.json; added append_by_type for type-specific exclusions."
+      },
+      {
+        "version": "0.2.0",
+        "date": "2026-11-06",
+        "change": "Applied Option A from reference analysis (user-approved): `negative` synced with style_lock v0.2.0; character adds chibi/super deformed; weapon swaps 'multiple weapons' for 'weapon pile' so the double-exposure echo is allowed; scene drops 'character' so incidental creatures are allowed and adds 'human figure'."
+      }
+    ]
+  },
+  "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render",
+  "append_by_type": {
+    "character": "chibi, super deformed",
+    "weapon": "person, character, hands, hand holding weapon, wielder, weapon pile, weapon rack",
+    "scene": "people, crowd, human figure, close-up portrait, flat empty background",
+    "magic": "character portrait focus, face close-up, dull flat lighting"
+  }
+}

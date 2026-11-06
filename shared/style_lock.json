@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "version": "0.2.0",
+    "status": "revised_from_reference_analysis",
+    "locked": true,
+    "last_updated": "2026-11-06",
+    "source": "Option A from output/reports/style_analysis.md (match the reference images), approved by the user on 2026-11-06.",
+    "edit_policy": "Read-only for every skill and agent. Edit only when the user explicitly asks; then bump version, update last_updated and append to changelog. Keep `negative` identical to shared/negative_lock.json -> negative.",
+    "reference_analysis": {
+      "status": "done",
+      "report": "output/reports/style_analysis.md",
+      "analyzed_counts": { "character": 20, "weapon": 20, "scene": 20, "magic": 20 }
+    },
+    "changelog": [
+      {
+        "version": "0.1.0",
+        "date": "2026-11-06",
+        "change": "Initial values from user brief. Added by_type slots; scene uses a framing override because 'clean dark atmospheric background' contradicts a full environment."
+      },
+      {
+        "version": "0.2.0",
+        "date": "2026-11-06",
+        "change": "Applied Option A from reference analysis: vibrant Japanese TCG style replaces dark fantasy palette; dynamic diagonal framing with blurred thematic backgrounds; negative swaps 'blurry'/'cropped subject' for 'blurry subject'/'awkward cropping, cut-off head' and adds anti-desaturation terms; style_append and framing_override added for all four types."
+      }
+    ]
+  },
+  "style": "vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary accent glow, luminous bloom and glowing particles, sparkling star-shaped light glints, glossy specular highlights, bright high-key lighting with strong rim light, professional TCG card art",
+  "framing": "dynamic diagonal composition, subject fills the frame, softly blurred thematic background with atmospheric depth, no card frame, no text, no watermark, no UI",
+  "quality": "highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render",
+  "by_type": {
+    "character": {
+      "style_append": "anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, glossy hair highlights, gold trim and gemstone accents",
+      "framing_override": "dynamic diagonal composition, character fills the frame, softly blurred thematic background with bokeh and sparkles, no card frame, no text, no watermark, no UI"
+    },
+    "weapon": {
+      "style_append": "semi-realistic glossy hard-surface rendering, polished reflective metal, faceted gemstones with star glints, glowing aura outlining the weapon",
+      "framing_override": "weapon placed diagonally across the frame, translucent oversized double-exposure echo of the same weapon in the background, softly blurred thematic environment matching the weapon's element, no card frame, no text, no watermark, no UI"
+    },
+    "scene": {
+      "style_append": "anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast",
+      "framing_override": "single dominant landmark filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI"
+    },
+    "magic": {
+      "style_append": "anime-style magic VFX, crisp sharp-edged energy shapes, manga speed lines, white-hot overexposed core with intense bloom",
+      "framing_override": "explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI"
+    }
+  }
+}

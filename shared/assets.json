@@ -1,0 +1,23 @@
+{
+  "_entry_template": {
+    "id": "",
+    "name": "",
+    "aliases": [],
+    "trigger_word": "",
+    "lora_file": "",
+    "default_weight": 0.8,
+    "description": "",
+    "locked_traits": []
+  },
+  "characters": [],
+  "weapons": [],
+  "scenes": [],
+  "magic_effects": [],
+  "loras": {
+    "style": "",
+    "character": "",
+    "weapon": "",
+    "scene": "",
+    "magic": ""
+  }
+}
