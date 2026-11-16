@@ -1,5 +1,79 @@
 # 參考圖風格分析報告
 
+> **2026-11-16：參考圖已換成 v2 組，style_lock 已更新為 v0.4.0。** 最新結論見下方「v2 參考圖分析」。之後的「v1 分析」是 2026-11-06 的歷史紀錄，只用來追溯 0.2.0 的決定，裡面的數字不代表現行參考圖。
+
+## v2 參考圖分析（2026-11-16）
+
+- 樣本：`data/references/` 四類各 20 張，全部換新，取自多個系列。舊組移到 `data/references/_archive/`。
+- 方法：與 v1 相同，逐張目視判讀 7 個面向。「約 N/20」是目視估計的次數。
+- 分析時的版本：style_lock v0.3.1、negative_lock v0.3.2。
+- **狀態：使用者已於 2026-11-16 批准修訂。`style_lock.json` 更新為 v0.4.0，`negative_lock.json` 維持 0.3.2。**
+
+### 角色（20 張）
+
+| 面向 | 觀察 | 與 v0.3.1 比較 |
+|---|---|---|
+| 媒介與筆觸 | 動漫賽璐璐、乾淨線稿、柔和漸層 | 一致 |
+| 色彩 | 高飽和，單一元素色系加互補色 | 一致 |
+| 光線 | 方向光加材質高光；發光多半來自武器或魔法本身 | 一致 |
+| 構圖 | 對角動態，角色塞滿畫面 | 一致 |
+| 背景 | 可辨認的具體主題環境（城塞、森林、天空、戰場），只有輕微景深 | **不一致**：原本寫 softly blurred，已改為 detailed thematic environment |
+| 材質 | 金屬盔甲、布料、獸皮；有金飾或寶石的約 7/20 | **不一致**：原本預設 gold trim and gemstone，已移除，改由角色設定決定 |
+| 整體氛圍（眼睛） | 只有幼小型角色是大眼，成年角色的五官比例較寫實 | **不一致**：large expressive eyes 已改為 expressive eyes |
+
+### 武器（20 張）
+
+| 面向 | 觀察 | 與 v0.3.1 比較 |
+|---|---|---|
+| 媒介 | 硬表面描寫，寶石有多切面 | 一致 |
+| 光線 | 官方圖常有強烈星芒與 bloom，少數有半透明殘影 | **刻意保留落差**：你在 0.3.0／0.3.1 選擇克制光效並移除殘影 |
+| 構圖 | 對角擺放；背景常有吉祥物、生物或持有者陪襯 | 符合 0.3.2 規則（寫進 `display` 欄位） |
+| 背景 | 主題環境加柔焦 | 一致 |
+
+武器部分不改。
+
+### 場地（20 張）
+
+| 面向 | 觀察 | 與 v0.3.1 比較 |
+|---|---|---|
+| 媒介 | 動畫背景式繪畫，有空氣透視 | 一致 |
+| 構圖 | 約 9/20 以建築或地形地標為主；其餘是單一主題物件（漩渦、星球、晶體群、巨花、門） | **不一致**：lock 原本只寫 landmark，已改為 focal subject；skill 新增 `scene_kind: focal_object` |
+| 景深 | 地標型多半有三層景深；物件型多半是物件被環境包圍，沒有明確的三層 | skill 的 `layers` 在 focal_object 類型下改為選填 |
+| 色彩、光線 | 環境色調強烈，只有一個主導色 | 一致 |
+
+註：這組取自剩餘的場地卡，物件型的比例可能偏高。所以只把物件型加成選項，預設仍是地標型。
+
+### 魔法（20 張）
+
+| 面向 | 觀察 | 與 v0.3.1 比較 |
+|---|---|---|
+| 主體 | 約 12/20 是生物施放特效、或被特效包圍，生物和特效一起當主體；沒有人物臉部特寫 | **不一致**：skill 原本不讓生物當主角，已新增「有生物」構圖模板 |
+| 背景 | 亮背景與暗背景約各一半，依元素而定（聖光、風偏亮，暗影、火偏暗） | **不一致**：dim colored background 已改為 element-appropriate background |
+| 特效 | 形狀清楚、層次分明，發光依元素而定 | 一致 |
+
+### 四類合併結論
+
+- 全域的 `style`、`quality`、`negative` 不變。動漫日系 TCG、高飽和、克制光效這幾點仍然成立。
+- 舊參考組只來自單一系列，造成角色描述有偏差，現已修正：移除大眼與預設金飾，背景改為具體環境。
+- 官方圖的強烈星芒與 bloom 是「已知、刻意保留的落差」，依你在 0.3.0 的決定不跟進。
+
+### 已套用的變更（v0.4.0）
+
+| 位置 | 變更 |
+|---|---|
+| `style_lock.by_type.character.style_append` | `large expressive eyes with layered highlights` 改為 `expressive eyes with detailed highlights`；移除 `gold trim and gemstone accents` |
+| `style_lock.by_type.character.framing_override` | `softly blurred thematic background` 改為 `detailed thematic environment background` |
+| `style_lock.by_type.scene.framing_override` | `single dominant landmark` 改為 `single dominant focal subject` |
+| `style_lock.by_type.magic.framing_override` | `dim colored background` 改為 `element-appropriate background` |
+| `skills/character-art` | `outfit` 不再預設金飾或寶石 |
+| `skills/scene-art` | 新增 `scene_kind` 與 focal_object 構圖模板；focal_object 類型下 `layers` 選填 |
+| `skills/magic-art` | 生物可與特效一起當主體，新增「有生物」構圖模板；背景亮暗依元素決定 |
+
+---
+
+# v1 分析（2026-11-06，歷史紀錄）
+
+
 - 分析日期：2026-11-06
 - 樣本：`data/references/` 四類各 20 張，共 80 張（全部逐張看過）
 - 方法：逐張目視判讀 7 個面向；表中「約 N/20」是目視統計的約略次數，不是程式量測

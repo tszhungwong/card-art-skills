@@ -121,7 +121,7 @@ description: Generate consistent vibrant fantasy TCG weapon, item and equipment 
     "assets": []
   },
   "lock_exceptions": [],
-  "style_lock_version": "0.3.1",
+  "style_lock_version": "0.4.0",
   "negative_lock_version": "0.3.2"
 }
 ```

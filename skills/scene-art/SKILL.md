@@ -28,7 +28,7 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
 
 ## 3. 如何解析使用者輸入
 
-1. 拆出使用者明確提供的地點、時間、天氣、地標、氛圍、顏色、生物，對應到 §4 欄位。
+1. 拆出使用者明確提供的地點、時間、天氣、地標、氛圍、顏色、生物，對應到 §4 欄位。並判斷 `scene_kind`：以建築、地形為主 → `landmark`；以單一主題物件（漩渦、星球、晶體群、巨花、傳送門…）為主 → `focal_object`。
 2. 比對 `assets.json → scenes` 的 `name`／`aliases`／`id`，命中時帶入資產設定。
 3. 抽出排除需求，英譯後加入負面 prompt。
 4. 判斷比例：使用者說「橫向」「全景」「寬景」→ `3:2`；否則用預設 `2:3`。
@@ -39,9 +39,10 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
 
 | key | 欄位 | 核心 | 補全原則（英文寫入 prompt） |
 |---|---|---|---|
+| `scene_kind` | 場地類型 | | `landmark`（預設）或 `focal_object`（漩渦、星球、晶體群、巨花、傳送門等單一主題物件） |
 | `location_type` | 地點類型 | ★ | 具體地點與狀態（ancient ruins covered in snow, volcanic fortress, sunken temple） |
-| `landmark` | 主要地標 | | **單一主導地標**，佔畫面大面積（a towering broken archway, a giant ancient tree, a floating citadel） |
-| `layers` | 前景／中景／背景 | | 三層都要寫：foreground…, midground…, background… |
+| `landmark` | 主要地標 | | **單一主導地標或主題物件**，佔畫面大面積（a towering broken archway, a giant ancient tree, a floating citadel） |
+| `layers` | 前景／中景／背景 | | `landmark` 類型三層都要寫：foreground…, midground…, background…；`focal_object` 類型選填，可改寫一句包圍環境 |
 | `time_weather` | 時間與天氣 | | 選能強化氛圍與色調的組合（sunset + drifting clouds, night + moonlight）；以環境光源照明，只有題材需要時才加入發光地標、符文或極光 |
 | `mood` | 氛圍 | | 1–2 個形容詞，預設偏奇幻壯觀（wondrous, awe-inspiring, mysterious, ominous） |
 | `color` | 色彩 | | 配色句：`[主導環境色調] color scheme with [互補色] accents`；每張只有一個主導色調 |
@@ -53,15 +54,16 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
 **組裝對應（`prompt_rules.md` §3）：**
 - subject：`location_type` 加上 `landmark`
 - details：`layers`（foreground → midground → background）→ `time_weather` → `mood` → `color` → `creatures`（若有）
-- composition（固定模板，只替換 `[ ]`）：
-  `[vertical|horizontal] environment illustration, [landmark noun] as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background`
+- composition（固定模板，依 `scene_kind` 擇一，只替換 `[ ]`）：
+  - landmark：`[vertical|horizontal] environment illustration, [landmark noun] as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background`
+  - focal_object：`[vertical|horizontal] environment illustration, [object noun] as the dominant focal point filling much of the frame, immersive surrounding environment`
 - framing：使用 `style_lock.by_type.scene.framing_override`（逐字）
 - 比例：預設 `2:3`；橫向或全景 `3:2`；配合參考圖框 `5:4`。
 
 ## 5. 不可擅自更改的欄位
 
 - `style_lock.json`、`negative_lock.json` 的所有字串（包含 scene 的 framing override 與追加負面詞）
-- composition 模板中的單一主導地標與前景／中景／背景三層結構
+- composition 模板中的單一主導焦點；`landmark` 類型保留前景／中景／背景三層結構
 - 使用者明確指定的地點、時間、天氣、地標、色彩、生物
 - 命中資產的 `description`、`locked_traits`、`trigger_word`
 
@@ -80,6 +82,7 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
 
 | 欄位 | 設定 | 來源 |
 |---|---|---|
+| 場地類型 | 地標型（landmark） | 自動判斷 |
 | 地點類型 | 被冰雪覆蓋的古代遺跡 | 使用者 |
 | 主要地標 | 半埋在雪中、刻著風化符文的高大斷裂石拱門 | 自動補全 |
 | 前景／中景／背景 | 前：覆雪斷柱與凍結碎石／中：掛滿冰柱的拱門／後：霧中冰封山脈 | 自動補全 |
@@ -97,6 +100,7 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
   "needs_confirmation": false,
   "confirmation_reasons": [],
   "fields": {
+    "scene_kind": "landmark",
     "location_type": "ancient ruins covered in snow and ice",
     "landmark": "a towering broken stone archway carved with weathered runes, half-buried in snow",
     "layers": "foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains",
@@ -106,12 +110,12 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
     "creatures": "",
     "framing": "vertical, archway dominant at upper-middle"
   },
-  "auto_filled": ["landmark", "layers", "time_weather", "mood", "color", "creatures", "framing"],
+  "auto_filled": ["scene_kind", "landmark", "layers", "time_weather", "mood", "color", "creatures", "framing"],
   "assumptions": ["未指定是否有人物或生物：場地卡預設無人、無生物，以地標為焦點。"],
   "matched_assets": [],
-  "positive_prompt": "ancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant landmark filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "positive_prompt": "ancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant focal subject filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
   "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, people, crowd, human figure, close-up portrait, flat empty background",
-  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\nancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant landmark filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, people, crowd, human figure, close-up portrait, flat empty background\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\nancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant focal subject filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, people, crowd, human figure, close-up portrait, flat empty background\n\nAspect ratio: 2:3 portrait (1024x1536)",
   "aspect_ratio": "2:3",
   "resolution_hint": "832x1216",
   "suggested_loras": {
@@ -120,8 +124,8 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
     "assets": []
   },
   "lock_exceptions": [],
-  "style_lock_version": "0.3.0",
-  "negative_lock_version": "0.3.0"
+  "style_lock_version": "0.4.0",
+  "negative_lock_version": "0.3.2"
 }
 ```
 
@@ -129,7 +133,7 @@ description: Generate consistent vibrant fantasy TCG location, environment and f
 ```text
 Create an image from this prompt, used as written:
 
-ancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant landmark filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
+ancient ruins covered in snow and ice, a towering broken stone archway carved with weathered runes, half-buried in snow, foreground of snow-covered broken pillars and frozen rubble, midground archway hung with long icicles, background of misty frozen mountains, dusk, light snowfall, cold wind carrying fine snow, solemn and awe-inspiring atmosphere, icy blue and white color scheme with warm gold accents, golden dusk light shining through the arch, vertical environment illustration, the archway as the dominant focal point filling much of the frame, strong sense of depth with distinct foreground, midground and background, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast, single dominant focal subject filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
 
 Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, people, crowd, human figure, close-up portrait, flat empty background
 

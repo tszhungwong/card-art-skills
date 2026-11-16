@@ -1,9 +1,9 @@
 # 批量生成報告
 
 - 來源：`data/batches/batch.csv`（範例資料）
-- 生成時間：2026-11-06T17:39:20+08:00
-- style_lock 版本：0.2.0
-- negative_lock 版本：0.2.0
+- 生成時間：2026-11-16T14:34:06+08:00
+- style_lock 版本：0.4.0
+- negative_lock 版本：0.3.2
 
 ## 統計
 

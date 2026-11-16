@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "version": "0.3.1",
+    "version": "0.4.0",
     "status": "revised_from_user_feedback",
     "locked": true,
-    "last_updated": "2026-11-07",
-    "source": "2026-11-07 使用者批准柔和照明、克制高光與必要部位局部發光；沿用既有鮮豔日式 TCG 畫風。",
+    "last_updated": "2026-11-16",
+    "source": "2026-11-16 依 v2 參考圖（四類各 20 張，跨多個系列）分析，使用者批准修訂角色眼睛與飾件、角色背景、場地焦點、魔法背景亮度；保留 0.3.x 的克制光效決定。",
     "edit_policy": "Read-only for every skill and agent. Edit only when the user explicitly asks; then bump version, update last_updated and append to changelog. Keep `negative` identical to shared/negative_lock.json -> negative.",
     "reference_analysis": {
       "status": "done",
@@ -14,7 +14,9 @@
         "weapon": 20,
         "scene": 20,
         "magic": 20
-      }
+      },
+      "reference_set": "v2",
+      "date": "2026-11-16"
     },
     "changelog": [
       {
@@ -36,6 +38,11 @@
         "version": "0.3.1",
         "date": "2026-11-07",
         "change": "依使用者要求移除武器背景強制加入的半透明放大殘影；保留對角構圖與主題環境。"
+      },
+      {
+        "version": "0.4.0",
+        "date": "2026-11-16",
+        "change": "依 v2 參考圖分析（使用者批准）：角色改為 expressive eyes 並移除預設金飾寶石，背景改為具體主題環境；場地 framing 由 landmark 改為 focal subject 以容納物件型場地；魔法背景亮暗依元素。全域 style、negative 與武器不變。"
       }
     ]
   },
@@ -45,8 +52,8 @@
   "negative": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces",
   "by_type": {
     "character": {
-      "style_append": "anime character art, clean lineart, cel shading with soft gradients, large expressive eyes with layered highlights, soft hair highlights, gold trim and gemstone accents",
-      "framing_override": "dynamic diagonal composition, character fills the frame, softly blurred thematic background with atmospheric depth, no card frame, no text, no watermark, no UI"
+      "style_append": "anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights",
+      "framing_override": "dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI"
     },
     "weapon": {
       "style_append": "detailed hard-surface rendering, material-appropriate reflections, faceted gemstones with restrained highlights",
@@ -54,12 +61,11 @@
     },
     "scene": {
       "style_append": "anime fantasy background art, painterly environment, atmospheric haze and aerial perspective, strong ambient color cast",
-      "framing_override": "single dominant landmark filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI"
+      "framing_override": "single dominant focal subject filling much of the frame, atmospheric depth, no card frame, no text, no watermark, no UI"
     },
     "magic": {
       "style_append": "anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element",
-      "framing_override": "explosive dynamic composition, effect fills most of the frame, dim colored background with motion blur, no card frame, no text, no watermark, no UI"
+      "framing_override": "explosive dynamic composition, effect fills most of the frame, element-appropriate background with motion blur, no card frame, no text, no watermark, no UI"
     }
   }
 }
-
