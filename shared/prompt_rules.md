@@ -1,6 +1,6 @@
 # 共用 Prompt 規則（prompt_rules.md）
 
-所有 skill（character-art、weapon-art、scene-art、magic-art、batch-generate）都必須遵守本檔。
+所有 skill（character-art、evolution-art、weapon-art、scene-art、magic-art、batch-generate）都必須遵守本檔。
 所有路徑皆相對於 `card-art-skills/` 根目錄。
 
 > 分工原則：**style lock 決定「怎麼畫」**（風格、框架、品質、負面詞）；**各 skill 只決定「畫什麼」與「構圖」**。
@@ -24,7 +24,7 @@
 
 | asset_type | Skill | assets.json 陣列 | loras 鍵 | 預設比例 | 可選比例 |
 |---|---|---|---|---|---|
-| `character` | character-art | `characters` | `character` | 2:3 | 5:4 |
+| `character` | character-art、evolution-art | `characters` | `character` | 2:3 | 5:4 |
 | `weapon` | weapon-art | `weapons` | `weapon` | 2:3 | 3:2、5:4 |
 | `scene` | scene-art | `scenes` | `scene` | 2:3 | 3:2、5:4 |
 | `magic` | magic-art | `magic_effects` | `magic` | 2:3 | 5:4 |
@@ -206,6 +206,16 @@
 把 `chatgpt_prompt` 放在 ` ```text ` 區塊中輸出，讓使用者整段複製貼到 ChatGPT（格式見 §12）。
 
 需確認時只輸出「預計補全設定」表與問題，不輸出 JSON，也不輸出 ChatGPT 區塊。
+
+角色系列每張均獨立輸出上述格式，沿用角色欄位、`asset_type: "character"`、鎖定、LoRA 與比例；`skill` 填實際使用的技能，CSV 不新增類型。
+
+| 需求 | skill | 輸出份數 |
+|---|---|---|
+| 同一型態的普通版與稀有異畫 | `character-art` 選用流程 | 各一份 |
+| 基礎／進化對照或指定多個時期 | `evolution-art` | 預設兩份；指定時期則按時間每期一份 |
+| 為既有時間線補一期 | `evolution-art` | 只輸出新增期 |
+
+獨立角色或單獨換裝使用 `character-art`，法術效果使用 `magic-art`。
 
 ---
 

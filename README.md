@@ -30,9 +30,12 @@
 | 畫面主體 | 技能 | 可直接試用的描述 |
 | --- | --- | --- |
 | 角色、怪物、召喚獸 | `character-art` | 銀髮精靈斥候，披深綠斗篷，蹲在樹枝上觀察谷地 |
+| 同一角色的基礎與進化型態 | `evolution-art` | 沼澤斥候，兩張都保留耳缺與腰帶徽記；進化後長出頸鰓與指蹼 |
 | 武器、道具、裝備 | `weapon-art` | 古木法杖，杖頭鑲著冰晶，銀線纏繞握柄 |
 | 地點、環境 | `scene-art` | 山崖上的廢棄天文台，破裂的圓頂朝向日出，橫向 3:2 |
 | 法術、技能特效 | `magic-art` | 石板從地面翻起，圍成半圓形的土元素護盾 |
+
+`evolution-art` 預設產生基礎與進化兩份獨立提示詞，也可指定多個時期，例如幼蟲、蛹、成蛾，按順序每期一份；同一型態的普通版與稀有異畫可使用 `character-art` 成對產生，各版獨立輸出。單張角色與單獨換裝仍使用 `character-art`；成對生成不新增 CSV 類型。
 
 ### 用 CSV 產生一批提示詞
 
@@ -86,9 +89,12 @@ M101,magic,岩盾,石板從地面翻起形成半圓護盾
 | 画面主体 | 技能 | 可直接试用的描述 |
 | --- | --- | --- |
 | 角色、怪物、召唤兽 | `character-art` | 银发精灵斥候披着深绿斗篷，蹲在树枝上观察山谷 |
+| 同一角色的基础与进化形态 | `evolution-art` | 沼泽斥候，两张都保留耳缺与腰带徽记；进化后长出颈鳃与指蹼 |
 | 武器、道具、装备 | `weapon-art` | 古木法杖的杖头镶着冰晶，握柄上缠着银线 |
 | 地点、环境 | `scene-art` | 山崖上的废弃天文台，破裂的穹顶朝向初升的太阳，横向 3:2 |
 | 法术、技能特效 | `magic-art` | 石板从地面翻起，围成半圆形的土元素护盾 |
+
+`evolution-art` 默认生成基础与进化两份独立提示词，也可指定多个时期，例如幼虫、蛹、成蛾，按顺序每期一份；同一形态的普通版与稀有异画可使用 `character-art` 成对生成，各版独立输出。单张角色和单独换装仍使用 `character-art`；成对生成不新增 CSV 类型。
 
 ### 用 CSV 批量生成提示词
 
@@ -142,9 +148,12 @@ Choose by focal point. For a knight holding a staff, use `weapon-art` to feature
 | Focal point | Skill | Example request |
 | --- | --- | --- |
 | Character, monster, summoned creature | `character-art` | A silver-haired elven scout in a dark green cloak, crouching on a branch above a valley |
+| A character’s base and evolved forms | `evolution-art` | A marsh scout with a notched ear and a belt emblem in both forms, gaining neck gills and webbed fingers in the evolved form |
 | Weapon, item, equipment | `weapon-art` | An ancient wooden staff with an ice crystal at its tip and silver wire around the grip |
 | Location, environment | `scene-art` | An abandoned cliffside observatory, its broken dome facing the sunrise, 3:2 landscape |
 | Spell, skill effect | `magic-art` | Stone slabs rise from the ground to form a semicircular earth shield |
+
+`evolution-art` defaults to a base/evolved pair. For a named sequence such as larva, pupa, and adult moth, it produces one independent prompt per stage in order. For a standard illustration and rare alternate art of the same form, use `character-art` to produce two independent prompts. Single characters and standalone outfit changes also use `character-art`; paired generation does not add a CSV type.
 
 ### Generate a batch from CSV
 

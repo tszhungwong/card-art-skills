@@ -14,7 +14,8 @@
 |---|---|
 | 與使用者溝通 | **繁體中文** |
 | 所有 prompt（正向、負面、`fields` 的值） | **英文** |
-| 檔案中的說明文字 | 繁體中文 |
+| `skills/*/SKILL.md` 的指引、範例說明與測試 | **英文**；指定的繁中輸出字串照原文保留 |
+| 其他檔案中的說明文字 | 繁體中文 |
 
 ## 資料夾規則
 
@@ -37,7 +38,8 @@
 
 | 使用者需求 | 讀取並遵循 |
 |---|---|
-| 角色、人物、怪物、召喚獸立繪 | `skills/character-art/SKILL.md` |
+| 同一角色的基礎／進化對照、成長或改造歷程，含為既有時間線單獨補一期 | `skills/evolution-art/SKILL.md` |
+| 單張角色、人物、怪物、召喚獸立繪（含單獨換裝），或同一型態的普通版與稀有異畫 | `skills/character-art/SKILL.md` |
 | 武器、道具、裝備 | `skills/weapon-art/SKILL.md` |
 | 場地、環境、地點卡 | `skills/scene-art/SKILL.md` |
 | 魔法、技能特效、法術卡 | `skills/magic-art/SKILL.md` |
