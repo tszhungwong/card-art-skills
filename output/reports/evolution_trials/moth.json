@@ -1,0 +1,161 @@
+[
+  {
+    "skill": "evolution-art",
+    "asset_type": "character",
+    "user_input": "以同一隻奇幻夜蛾的三個時期，各產一張獨立卡圖 prompt：幼蟲、蛹、成蛾。保留一道乳白新月和凹口內的一枚朱紅圓點；三期依身體結構選不同可見位置。黃昏、深紫與乳白身體，朱紅只在圓點。要看見中間的蛹殼，成蛾展翅。",
+    "needs_confirmation": false,
+    "confirmation_reasons": [],
+    "fields": {
+      "form": "larva",
+      "race_type": "a fantasy moth larva, plump segmented deep-purple body with milky-white bands, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad dorsal side of the middle body segment",
+      "role": "moth larva",
+      "outfit": "",
+      "weapon_prop": "",
+      "pose": "curving along a branch with its marked dorsal side facing the viewer",
+      "expression": "small dark eyes visible",
+      "element_faction": "deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch",
+      "background_magic": "twilight woodland, deep-purple foliage and milky-white bark",
+      "framing": "full-body"
+    },
+    "auto_filled": [
+      "role",
+      "pose",
+      "expression",
+      "background_magic",
+      "framing"
+    ],
+    "assumptions": [
+      "幼蟲的辨識標記配置於中段背側；此位置由身體構造自行補全。",
+      "三期採用相同黃昏林地與枝條；姿勢、身體細節和取景依各階段結構補全。",
+      "朱紅僅限圓點，並將圓點以外的朱紅加入負面詞。"
+    ],
+    "matched_assets": [],
+    "positive_prompt": "a fantasy moth larva, plump segmented deep-purple body with milky-white bands, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad dorsal side of the middle body segment, curving along a branch with its marked dorsal side facing the viewer, small dark eyes visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+    "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot",
+    "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na fantasy moth larva, plump segmented deep-purple body with milky-white bands, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad dorsal side of the middle body segment, curving along a branch with its marked dorsal side facing the viewer, small dark eyes visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot\n\nAspect ratio: 2:3 portrait (1024x1536)",
+    "aspect_ratio": "2:3",
+    "resolution_hint": "832x1216",
+    "suggested_loras": {
+      "style": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "character": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "assets": []
+    },
+    "lock_exceptions": [],
+    "style_lock_version": "0.4.0",
+    "negative_lock_version": "0.3.2"
+  },
+  {
+    "skill": "evolution-art",
+    "asset_type": "character",
+    "user_input": "以同一隻奇幻夜蛾的三個時期，各產一張獨立卡圖 prompt：幼蟲、蛹、成蛾。保留一道乳白新月和凹口內的一枚朱紅圓點；三期依身體結構選不同可見位置。黃昏、深紫與乳白身體，朱紅只在圓點。要看見中間的蛹殼，成蛾展翅。",
+    "needs_confirmation": false,
+    "confirmation_reasons": [],
+    "fields": {
+      "form": "pupa",
+      "race_type": "a fantasy moth pupa, intact tapered deep-purple chrysalis with milky-white segmented ridges, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad outward-facing surface of the chrysalis shell",
+      "role": "moth pupa",
+      "outfit": "",
+      "weapon_prop": "",
+      "pose": "hanging diagonally from a branch with its marked shell surface facing the viewer, the complete chrysalis shell visible",
+      "expression": "",
+      "element_faction": "deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch",
+      "background_magic": "twilight woodland, deep-purple foliage and milky-white bark",
+      "framing": "full-body"
+    },
+    "auto_filled": [
+      "role",
+      "pose",
+      "expression",
+      "background_magic",
+      "framing"
+    ],
+    "assumptions": [
+      "蛹期標記配置於完整蛹殼外側；承載位置為自行補全，可見線索是殼上的記號。",
+      "三期採用相同黃昏林地與枝條；姿勢、身體細節和取景依各階段結構補全。",
+      "朱紅僅限圓點，並將圓點以外的朱紅加入負面詞。"
+    ],
+    "matched_assets": [],
+    "positive_prompt": "a fantasy moth pupa, intact tapered deep-purple chrysalis with milky-white segmented ridges, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad outward-facing surface of the chrysalis shell, hanging diagonally from a branch with its marked shell surface facing the viewer, the complete chrysalis shell visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+    "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot",
+    "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na fantasy moth pupa, intact tapered deep-purple chrysalis with milky-white segmented ridges, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the broad outward-facing surface of the chrysalis shell, hanging diagonally from a branch with its marked shell surface facing the viewer, the complete chrysalis shell visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot\n\nAspect ratio: 2:3 portrait (1024x1536)",
+    "aspect_ratio": "2:3",
+    "resolution_hint": "832x1216",
+    "suggested_loras": {
+      "style": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "character": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "assets": []
+    },
+    "lock_exceptions": [],
+    "style_lock_version": "0.4.0",
+    "negative_lock_version": "0.3.2"
+  },
+  {
+    "skill": "evolution-art",
+    "asset_type": "character",
+    "user_input": "以同一隻奇幻夜蛾的三個時期，各產一張獨立卡圖 prompt：幼蟲、蛹、成蛾。保留一道乳白新月和凹口內的一枚朱紅圓點；三期依身體結構選不同可見位置。黃昏、深紫與乳白身體，朱紅只在圓點。要看見中間的蛹殼，成蛾展翅。",
+    "needs_confirmation": false,
+    "confirmation_reasons": [],
+    "fields": {
+      "form": "adult moth",
+      "race_type": "an adult fantasy moth, deep-purple body with milky-white fur and broad deep-purple wings edged in milky white, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the central dorsal thorax",
+      "role": "adult moth",
+      "outfit": "",
+      "weapon_prop": "",
+      "pose": "wings fully spread, dorsal thorax facing the viewer with the marking clearly visible, perched on a branch",
+      "expression": "dark compound eyes visible",
+      "element_faction": "deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch",
+      "background_magic": "twilight woodland, deep-purple foliage and milky-white bark",
+      "framing": "full-body"
+    },
+    "auto_filled": [
+      "role",
+      "pose",
+      "expression",
+      "background_magic",
+      "framing"
+    ],
+    "assumptions": [
+      "成蛾的辨識標記配置於背側胸部；此位置由身體構造自行補全。",
+      "三期採用相同黃昏林地與枝條；姿勢、身體細節和取景依各階段結構補全。",
+      "朱紅僅限圓點，並將圓點以外的朱紅加入負面詞。"
+    ],
+    "matched_assets": [],
+    "positive_prompt": "an adult fantasy moth, deep-purple body with milky-white fur and broad deep-purple wings edged in milky white, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the central dorsal thorax, wings fully spread, dorsal thorax facing the viewer with the marking clearly visible, perched on a branch, dark compound eyes visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+    "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot",
+    "chatgpt_prompt": "Create an image from this prompt, used as written:\n\nan adult fantasy moth, deep-purple body with milky-white fur and broad deep-purple wings edged in milky white, a milky-white crescent marking with a single round vermilion dot inside its inward-facing notch on the central dorsal thorax, wings fully spread, dorsal thorax facing the viewer with the marking clearly visible, perched on a branch, dark compound eyes visible, deep purple and milky white color scheme with vermilion accents confined to the single round dot inside the crescent notch, twilight woodland, deep-purple foliage and milky-white bark, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, vermilion outside the single dot\n\nAspect ratio: 2:3 portrait (1024x1536)",
+    "aspect_ratio": "2:3",
+    "resolution_hint": "832x1216",
+    "suggested_loras": {
+      "style": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "character": {
+        "file": "",
+        "weight": null,
+        "status": "reserved"
+      },
+      "assets": []
+    },
+    "lock_exceptions": [],
+    "style_lock_version": "0.4.0",
+    "negative_lock_version": "0.3.2"
+  }
+]

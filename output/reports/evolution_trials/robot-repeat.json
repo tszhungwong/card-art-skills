@@ -1,0 +1,25 @@
+{
+  "目的": "固定文字穩定度實驗；三次獨立呼叫內建 imagegen，不提供參考圖，每次生成一張，沒有重抽。",
+  "prompt_來源": "output/reports/evolution_trials/robot.json 的 階段[1].prompt（名稱：改造中期）",
+  "prompt_utf8_sha256": "6cb8f5c4fb71347be85aea721f48571950d0bd3b125893d1a46a62d4881a5ac9",
+  "prompt": "Create an image from this prompt, used as written:\n\na humanoid mechanical field-repair robot, rounded ivory head with a single horizontal black visor, a circular brass disk on the center of its chest, ivory and navy color scheme with orange accents on the left shoulder plate, a diagonal riveted brass repair patch across its right shin, standing in a three-quarter frontal pose with both arms visible, alert expression in its visor, workshop environment, midway modification stage, a widened left forearm with two stacked ivory tool housings and a longer articulated manipulator, the brass shin patch is scratched and a small steel reinforcement plate is riveted over its lower edge, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "評判條件": "觀察角色左前臂的兩段象牙色外殼、角色右小腿斜向黃銅補片及橘色在左肩以外的分布；分別辨識存在、側別和數量。原文說 orange accents on the left shoulder plate，未寫 only，肩外橘色不構成違反明示的專屬限制。",
+  "結果": [
+    {
+      "圖片": "output/images/evolution-periods/robot-repeat-1.png",
+      "原始圖片": "C:/Users/user/.codex/generated_images/01a1e9e8-5880-7930-9716-63a13ef898a5/exec-e65fef9d-99fd-4055-af08-e67312870a87.png",
+      "觀察": "角色左前臂有兩段上下排列的象牙色大型外殼及延伸夾爪；角色右小腿有斜向黃銅鉚釘補片和底緣銀色加固片；橘色除左肩外出現在頭頂、胸前、前臂與腿部。"
+    },
+    {
+      "圖片": "output/images/evolution-periods/robot-repeat-2.png",
+      "原始圖片": "C:/Users/user/.codex/generated_images/01a1e9e8-5880-7930-9716-63a13ef898a5/exec-30cfb6ee-04ae-4aa9-bc7a-ccf1744b7194.png",
+      "觀察": "角色左前臂有兩段上下排列的象牙色大型外殼及延伸夾爪；角色右小腿有斜向黃銅鉚釘補片和底緣銀色加固片；橘色除左肩外出現在頭頂、前臂、軀幹與腿腳。"
+    },
+    {
+      "圖片": "output/images/evolution-periods/robot-repeat-3.png",
+      "原始圖片": "C:/Users/user/.codex/generated_images/01a1e9e8-5880-7930-9716-63a13ef898a5/exec-36d47972-5f2d-4d0c-aa80-005489a99633.png",
+      "觀察": "角色左前臂有兩段上下排列的象牙色大型外殼及延伸夾爪；角色右小腿有斜向黃銅鉚釘補片和底緣銀色加固片；橘色除左肩外出現在軀幹、前臂、夾爪和腿腳。"
+    }
+  ],
+  "局限": "三次均呈現指定數量與側別，但三張樣本不足以推論穩定成功率；細部、身形與環境仍有差異，且未測 only 限定的遵從性。"
+}

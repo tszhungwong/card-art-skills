@@ -1,0 +1,115 @@
+{
+  "時間線": "右眉疤始於中年（平行線）",
+  "原線": "vampire.json 的 retest 已定初成年右眉有疤。本次兩張新圖另列；沒有取代原卡。",
+  "階段": [
+    {
+      "狀態": "新生成",
+      "圖檔": "output/images/evolution-periods/vampire-parallel-young.png",
+      "生成識別": "exec-92082046-3976-4a39-848f-112c1eea0e0b.png",
+      "紀錄": {
+        "skill": "evolution-art",
+        "asset_type": "character",
+        "user_input": "另測平行時間線：右眉疤始於中年，保留原卡並分開標示",
+        "needs_confirmation": false,
+        "confirmation_reasons": [],
+        "fields": {
+          "form": "young adult",
+          "race_type": "a young adult vampire, smooth youthful face and long dark hair, pale skin, red eyes, a continuous sweep of dark brow hairs and smooth intact skin across the character's right eyebrow, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch",
+          "role": "courtyard vampire",
+          "outfit": "a simple burgundy coat over a dark shirt",
+          "weapon_prop": "",
+          "pose": "three-quarter view with the character's right side and right ear turned toward the camera",
+          "expression": "calm gaze with visible small fangs",
+          "element_faction": "burgundy and charcoal color scheme with teal accents on the coat lining",
+          "background_magic": "moonlit stone courtyard",
+          "framing": "vertical half-body character portrait"
+        },
+        "auto_filled": [],
+        "assumptions": [
+          "原初成年卡已有右眉疤，另作平行線無眉疤的早期對照。",
+          "晚年沿用原複驗圖作視覺終點，沒有另行生成。"
+        ],
+        "matched_assets": [],
+        "positive_prompt": "a young adult vampire, smooth youthful face and long dark hair, pale skin, red eyes, a continuous sweep of dark brow hairs and smooth intact skin across the character's right eyebrow, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch, a simple burgundy coat over a dark shirt, calm gaze with visible small fangs, burgundy and charcoal color scheme with teal accents on the coat lining, standing in a moonlit stone courtyard, facing three-quarter view with the character's right side and right ear turned toward the camera, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+        "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, eyebrow scar, eyebrow slit",
+        "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na young adult vampire, smooth youthful face and long dark hair, pale skin, red eyes, a continuous sweep of dark brow hairs and smooth intact skin across the character's right eyebrow, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch, a simple burgundy coat over a dark shirt, calm gaze with visible small fangs, burgundy and charcoal color scheme with teal accents on the coat lining, standing in a moonlit stone courtyard, facing three-quarter view with the character's right side and right ear turned toward the camera, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed, eyebrow scar, eyebrow slit\n\nAspect ratio: 2:3 portrait (1024x1536)",
+        "aspect_ratio": "2:3",
+        "resolution_hint": "832x1216",
+        "suggested_loras": {
+          "style": {
+            "file": "",
+            "weight": null,
+            "status": "reserved"
+          },
+          "character": {
+            "file": "",
+            "weight": null,
+            "status": "reserved"
+          },
+          "assets": []
+        },
+        "lock_exceptions": [],
+        "style_lock_version": "0.4.0",
+        "negative_lock_version": "0.3.2"
+      }
+    },
+    {
+      "狀態": "新生成",
+      "圖檔": "output/images/evolution-periods/vampire-parallel-middle.png",
+      "生成識別": "exec-30a910b8-c516-4dc9-8afd-f3c8925116f8.png",
+      "紀錄": {
+        "skill": "evolution-art",
+        "asset_type": "character",
+        "user_input": "另測平行時間線：右眉疤始於中年，保留原卡並分開標示",
+        "needs_confirmation": false,
+        "confirmation_reasons": [],
+        "fields": {
+          "form": "middle age",
+          "race_type": "a middle-aged vampire, a few fine creases beside the eyes, faint nasolabial folds, long predominantly dark hair with just a few silver threads at the temples, pale skin, red eyes, a newly healed narrow rose-pink vertical scar through the character's right eyebrow on the viewer's left, a small break in the brow hairs where the scar crosses them, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch",
+          "role": "courtyard vampire",
+          "outfit": "a simple burgundy coat over a dark shirt",
+          "weapon_prop": "",
+          "pose": "three-quarter view with the character's right side and right ear turned toward the camera",
+          "expression": "calm gaze with visible small fangs",
+          "element_faction": "burgundy and charcoal color scheme with teal accents on the coat lining",
+          "background_magic": "moonlit stone courtyard",
+          "framing": "vertical half-body character portrait"
+        },
+        "auto_filled": [
+          "race_type"
+        ],
+        "assumptions": [
+          "少量鬢邊銀絲、淺紋與初癒粉紅疤為本次推定。",
+          "晚年沿用原複驗圖作視覺終點，沒有另行生成。"
+        ],
+        "matched_assets": [],
+        "positive_prompt": "a middle-aged vampire, a few fine creases beside the eyes, faint nasolabial folds, long predominantly dark hair with just a few silver threads at the temples, pale skin, red eyes, a newly healed narrow rose-pink vertical scar through the character's right eyebrow on the viewer's left, a small break in the brow hairs where the scar crosses them, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch, a simple burgundy coat over a dark shirt, calm gaze with visible small fangs, burgundy and charcoal color scheme with teal accents on the coat lining, standing in a moonlit stone courtyard, facing three-quarter view with the character's right side and right ear turned toward the camera, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+        "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed",
+        "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na middle-aged vampire, a few fine creases beside the eyes, faint nasolabial folds, long predominantly dark hair with just a few silver threads at the temples, pale skin, red eyes, a newly healed narrow rose-pink vertical scar through the character's right eyebrow on the viewer's left, a small break in the brow hairs where the scar crosses them, a conspicuous V-shaped notch cut into the outer upper rim of the character's right ear, the notch is about one quarter of the ear rim height and opens outward with the bright courtyard visible through the gap, hair swept back away from the character's right ear to expose the entire notch, a simple burgundy coat over a dark shirt, calm gaze with visible small fangs, burgundy and charcoal color scheme with teal accents on the coat lining, standing in a moonlit stone courtyard, facing three-quarter view with the character's right side and right ear turned toward the camera, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
+        "aspect_ratio": "2:3",
+        "resolution_hint": "832x1216",
+        "suggested_loras": {
+          "style": {
+            "file": "",
+            "weight": null,
+            "status": "reserved"
+          },
+          "character": {
+            "file": "",
+            "weight": null,
+            "status": "reserved"
+          },
+          "assets": []
+        },
+        "lock_exceptions": [],
+        "style_lock_version": "0.4.0",
+        "negative_lock_version": "0.3.2"
+      }
+    },
+    {
+      "狀態": "沿用既有終點，未重新生成",
+      "出處": "vampire.json#/retest/images/1",
+      "圖檔": "output/images/evolution-periods/vampire-elder-retest.png"
+    }
+  ]
+}
