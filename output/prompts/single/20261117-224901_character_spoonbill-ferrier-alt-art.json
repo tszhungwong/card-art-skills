@@ -1,0 +1,53 @@
+{
+  "skill": "character-art",
+  "asset_type": "character",
+  "user_input": "ok，按你的去做，除了岩羊，也多测试几个新的角色，可以是不同方向的设计",
+  "needs_confirmation": false,
+  "confirmation_reasons": [],
+  "fields": {
+    "race_type": "a long-legged ivory spoonbill with a black spoon-shaped bill, a crescent of black feathers around its left eye and two long swept-back ivory crest plumes",
+    "role": "a river courier",
+    "outfit": "a vermilion cord collar with one small square brass buckle",
+    "weapon_prop": "a single brass key on a vermilion loop",
+    "pose": "diving headfirst beside a ferry post, both wings swept upward, bill snapping shut on the falling key loop just above the water",
+    "expression": "",
+    "element_faction": "ivory and charcoal color scheme with vermilion accents on the collar and key loop",
+    "background_magic": "waterline view, airborne feet silhouetted against the sky, the key tip touching the surface at the center of a tiny ripple",
+    "framing": "full-body"
+  },
+  "auto_filled": [
+    "race_type",
+    "role",
+    "outfit",
+    "weapon_prop",
+    "pose",
+    "element_faction",
+    "background_magic",
+    "framing"
+  ],
+  "assumptions": [
+    "依使用者授權設計新角色、辨識特徵、場景及取景；插畫測試用設定。"
+  ],
+  "matched_assets": [],
+  "positive_prompt": "a long-legged ivory spoonbill with a black spoon-shaped bill, a crescent of black feathers around its left eye and two long swept-back ivory crest plumes, a river courier, a vermilion cord collar with one small square brass buckle, a single brass key on a vermilion loop, diving headfirst beside a ferry post, both wings swept upward, bill snapping shut on the falling key loop just above the water, ivory and charcoal color scheme with vermilion accents on the collar and key loop, waterline view, airborne feet silhouetted against the sky, the key tip touching the surface at the center of a tiny ripple, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed",
+  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na long-legged ivory spoonbill with a black spoon-shaped bill, a crescent of black feathers around its left eye and two long swept-back ivory crest plumes, a river courier, a vermilion cord collar with one small square brass buckle, a single brass key on a vermilion loop, diving headfirst beside a ferry post, both wings swept upward, bill snapping shut on the falling key loop just above the water, ivory and charcoal color scheme with vermilion accents on the collar and key loop, waterline view, airborne feet silhouetted against the sky, the key tip touching the surface at the center of a tiny ripple, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "aspect_ratio": "2:3",
+  "resolution_hint": "832x1216",
+  "suggested_loras": {
+    "style": {
+      "file": "",
+      "weight": null,
+      "status": "reserved"
+    },
+    "character": {
+      "file": "",
+      "weight": null,
+      "status": "reserved"
+    },
+    "assets": []
+  },
+  "lock_exceptions": [],
+  "style_lock_version": "0.4.0",
+  "negative_lock_version": "0.3.2"
+}

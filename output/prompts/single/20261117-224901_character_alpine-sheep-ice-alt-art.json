@@ -1,0 +1,48 @@
+{
+  "skill": "character-art",
+  "asset_type": "character",
+  "user_input": "ok，按你的去做，除了岩羊，也多测试几个新的角色，可以是不同方向的设计",
+  "needs_confirmation": false,
+  "confirmation_reasons": [],
+  "fields": {
+    "race_type": "a four-legged alpine rock sheep with russet fur, amber eyes, a single white diamond centered on the black bridge of its nose, exactly three round white spots on its left shoulder arranged in two rows: one centered toward the spine above two side by side at the same height toward the belly, two short black horns, a flat back, four cloven hooves",
+    "role": "",
+    "outfit": "",
+    "weapon_prop": "",
+    "pose": "standing on a snow-dusted rock at the edge of thin lake ice, left shoulder toward the viewer, head lowered to study its own upside-down face immediately below its muzzle",
+    "expression": "",
+    "element_faction": "russet color scheme with teal accents confined to the alpine lake water",
+    "background_magic": "slightly elevated front-left view, mirror-clear ice occupies the foreground, a single bright jagged fracture cuts directly across the reflected nose diamond, the reflected eye and muzzle remain readable on opposite sides of the fracture",
+    "framing": "full-body"
+  },
+  "auto_filled": [
+    "pose",
+    "background_magic",
+    "framing"
+  ],
+  "assumptions": [
+    "辨識特徵與配色逐字沿用前次岩羊普通版；依已同意的碎冰倒影構想補完鏡位。"
+  ],
+  "matched_assets": [],
+  "positive_prompt": "a four-legged alpine rock sheep with russet fur, amber eyes, a single white diamond centered on the black bridge of its nose, exactly three round white spots on its left shoulder arranged in two rows: one centered toward the spine above two side by side at the same height toward the belly, two short black horns, a flat back, four cloven hooves, standing on a snow-dusted rock at the edge of thin lake ice, left shoulder toward the viewer, head lowered to study its own upside-down face immediately below its muzzle, russet color scheme with teal accents confined to the alpine lake water, slightly elevated front-left view, mirror-clear ice occupies the foreground, a single bright jagged fracture cuts directly across the reflected nose diamond, the reflected eye and muzzle remain readable on opposite sides of the fracture, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
+  "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed",
+  "chatgpt_prompt": "Create an image from this prompt, used as written:\n\na four-legged alpine rock sheep with russet fur, amber eyes, a single white diamond centered on the black bridge of its nose, exactly three round white spots on its left shoulder arranged in two rows: one centered toward the spine above two side by side at the same height toward the belly, two short black horns, a flat back, four cloven hooves, standing on a snow-dusted rock at the edge of thin lake ice, left shoulder toward the viewer, head lowered to study its own upside-down face immediately below its muzzle, russet color scheme with teal accents confined to the alpine lake water, slightly elevated front-left view, mirror-clear ice occupies the foreground, a single bright jagged fracture cuts directly across the reflected nose diamond, the reflected eye and muzzle remain readable on opposite sides of the fracture, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration\n\nAvoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed\n\nAspect ratio: 2:3 portrait (1024x1536)",
+  "aspect_ratio": "2:3",
+  "resolution_hint": "832x1216",
+  "suggested_loras": {
+    "style": {
+      "file": "",
+      "weight": null,
+      "status": "reserved"
+    },
+    "character": {
+      "file": "",
+      "weight": null,
+      "status": "reserved"
+    },
+    "assets": []
+  },
+  "lock_exceptions": [],
+  "style_lock_version": "0.4.0",
+  "negative_lock_version": "0.3.2"
+}

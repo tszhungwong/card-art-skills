@@ -1,105 +1,115 @@
 ---
 name: character-art
-description: Generate consistent vibrant fantasy TCG character illustrations from short user descriptions, using the shared card-art style lock.
+description: Write English card-art prompts for an individual character, monster, or summoned creature using the shared style lock. Use this skill for a standard illustration and rare alternate art of the same character in the same form.
 ---
 
-# character-art：角色立繪
+# Character illustrations
 
-> 路徑皆相對於 `card-art-skills/`。本 skill 只決定「畫什麼」與「構圖」；「怎麼畫」一律來自 `shared/style_lock.json`。
+Paths are relative to `card-art-skills/`. This skill defines subject and composition; `shared/style_lock.json` defines style.
 
-## 1. 何時使用
+## 1. When to use this skill
 
-**使用：** 要生成以「單一角色」為主體的卡牌立繪，例如人物、種族、職業、怪物、龍或召喚獸（作為單位卡）。
-- 「我要生成一個獸人，拿著魔法棒」
-- 「一位銀髮精靈弓箭手」
+Use for a single figure: a person, fantasy species or profession, monster, dragon, or summoned unit. For a standard illustration and rare alternate art of the same character and form, use §6.
 
-**不使用（改用其他 skill）：**
-- 主體是武器、道具、裝備 → `weapon-art`
-- 主體是地點、環境 → `scene-art`
-- 主體是法術效果本身，施法者只是陪襯 → `magic-art`
-- 一次處理 CSV 多列 → `batch-generate`
-- 無法判斷 → 依 `prompt_rules.md` §7 詢問
+| Other requests | Route |
+|---|---|
+| Base and evolved forms, a sequence showing growth, aging, or machine modifications, or a single missing period in an existing character timeline | `evolution-art` |
+| Weapon, item, or equipment as the subject | `weapon-art` |
+| Location or environment as the subject | `scene-art` |
+| Spell effect as the subject, with the caster in a supporting role | `magic-art` |
+| Multiple CSV rows | `batch-generate` |
+| Unclear subject | Ask for clarification under `shared/prompt_rules.md` §7 |
 
-## 2. 必須讀取的共用檔案
+## 2. Required shared files
 
-每次執行前重新讀取：
-1. `shared/style_lock.json`（唯讀）：`style`、`quality`、`by_type.character`（`style_append` 與 `framing_override`）
-2. `shared/negative_lock.json`（唯讀）：`negative`、`append_by_type.character`
-3. `shared/assets.json`：`characters`、`loras.style`、`loras.character`
-4. `shared/prompt_rules.md`：組裝順序、配色寫法、補全、衝突、確認、輸出格式
+Before each run, read `shared/prompt_rules.md` and reload:
 
-## 3. 如何解析使用者輸入
+- `shared/style_lock.json` (read-only). Use `style`, `quality`, and the `style_append` and `framing_override` entries under `by_type.character`.
+- `shared/negative_lock.json` (read-only). Use `negative` and `append_by_type.character`.
+- `shared/assets.json`. Look up `characters`, `loras.style`, and `loras.character`.
 
-1. 拆出使用者明確提供的資訊，對應到 §4 欄位，來源標為「使用者」。
-2. 比對 `assets.json → characters` 的 `name`／`aliases`／`id`。命中時帶入 `description`、`locked_traits`、`trigger_word`、`lora_file`，來源標為「資產庫」。
-3. 抽出排除需求（「不要…」「別有…」），英譯後加入負面 prompt。
-4. 抽出構圖需求：「全身」→ full-body；「半身」→ half-body；「橫向」或指定比例 → 依 `prompt_rules.md` §2。
-5. 檢查衝突（`prompt_rules.md` §6），並判斷是否需確認（`prompt_rules.md` §7 加上本 skill 的核心欄位）。
-6. 需確認時，輸出「預計補全設定」與問題後停止。否則補全其餘欄位，依 `prompt_rules.md` §3–§4 組裝。
+## 3. Parse the request
 
-## 4. 必須補全的欄位
+1. Map explicit details to §4 fields and mark their source as the user.
+2. Match names, aliases, and IDs against `assets.json → characters`; apply `description`, `locked_traits`, `trigger_word`, and `lora_file` under the shared rules and identify the asset library as their source.
+3. Translate explicit exclusions into English and append them to the negative prompt.
+4. Map full-body and half-body requests to their respective composition templates. Apply the user's orientation or aspect ratio under `shared/prompt_rules.md` §2.
+5. Check conflicts and confirmation conditions under the shared rules §§6–7, including the core-field requirement in §4 below.
+6. If confirmation is required, present proposed settings and questions, then wait. Otherwise complete the fields and assemble under shared rules §§3–4.
 
-| key | 欄位 | 核心 | 補全原則（英文寫入 prompt） |
-|---|---|---|---|
-| `race_type` | 種族／角色類型 | ★ | 只給了職業時預設 `human`；寫出體型與醒目特徵（skin, horns, tusks, ears, wings） |
-| `role` | 職業或身份 | ★ | 依道具與種族推定，例如拿魔杖 → shaman／mage |
-| `outfit` | 服裝 | | 符合職業與陣營；具體寫出材質與層次。金屬飾件或寶石依角色設定才加入，不預設 |
-| `weapon_prop` | 武器或道具 | | 依職業補全；使用者指定的道具保留原物，只補材質細節 |
-| `pose` | 姿勢 | | 有動勢、剪影清楚；可讓一隻手伸向鏡頭；不遮臉 |
-| `expression` | 表情 | | 依陣營與個性，預設偏有活力（confident grin, bright smile, fierce glare…） |
-| `element_faction` | 元素或陣營 | | 依道具、服裝、用詞推定，並寫出配色句：`[主色系] color scheme with [互補色] accents`（`prompt_rules.md` §3） |
-| `background_magic` | 背景魔法效果 | | 可為空字串；僅在角色正在施法或題材需要時補少量局部效果，不預設符文陣、星芒或發光粒子；普通角色用環境背景 |
-| `framing` | 構圖 | | 預設 `half-body`；使用者說全身，或需要展示全套裝備／站姿時用 `full-body` |
+## 4. Character fields
 
-**核心規則：** `race_type` 與 `role` 至少要能判斷一項，否則需確認。
+Write prompt field values in English.
 
-**組裝對應（`prompt_rules.md` §3）：**
-- subject：`race_type` 加上 `role` 的主體句，例如 `a muscular orc tribal shaman, grey-green skin, prominent tusks`
-- details：`outfit` → `weapon_prop` → `pose` → `expression` → `element_faction` → `background_magic`
-- composition（固定模板，只替換 `[ ]`）：
-  - half-body：`[vertical|horizontal] half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible`
-  - full-body：`[vertical|horizontal] full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
-- framing：使用 `style_lock.by_type.character.framing_override`（逐字）
-- 比例：預設 `2:3`（vertical）。若要配合參考圖框或橫向，用 `5:4`（horizontal）。
-
-## 5. 不可擅自更改的欄位
-
-- `style_lock.json`、`negative_lock.json` 的所有字串（逐字使用）
-- composition 模板中的 `single character` 與 `face fully visible`
-- 使用者明確指定的內容（種族、道具、顏色、髮型、性別…）
-- 命中資產的 `description`、`locked_traits`、`trigger_word`
-- 需要違反時，依 `prompt_rules.md` §6 處理
-
-## 6. 輸出格式
-
-依 `prompt_rules.md` §9：先輸出繁中「補全設定」表，再輸出 JSON。`fields` 使用 §4 的 key；`suggested_loras` 的鍵為 `style`、`character`、`assets`。
-
-## 7. 範例輸入與範例輸出
-
-**輸入：**
-```
-我要生成一個獸人，拿著魔法棒
-```
-
-**輸出：**
-
-| 欄位 | 設定 | 來源 |
+| Key | Meaning | Completion rule |
 |---|---|---|
-| 種族／角色類型 | 獸人（orc） | 使用者 |
-| 職業或身份 | 部落薩滿（tribal shaman） | 自動補全 |
-| 服裝 | 層疊獸皮披肩、骨珠項鍊、金邊深紅儀式腰帶、鑲橘色寶石的皮護腕 | 自動補全 |
-| 武器或道具 | 魔法棒：扭曲木質魔杖，頂端鑲帶有克制內光的多切面火焰水晶 | 使用者＋細節補全 |
-| 姿勢 | 單手高舉魔杖，另一手伸向鏡頭引導魔力 | 自動補全 |
-| 表情 | 自信凶狠的咧嘴笑、獠牙外露 | 自動補全 |
-| 元素或陣營 | 火元素；橘紅與深紅主色系，青綠互補色點綴 | 自動補全 |
-| 背景魔法效果 | 杖尖附近少量火星，背景為岩石峽谷 | 自動補全 |
-| 構圖 | 直向 2:3 半身立繪 | 預設 |
+| `race_type` | Species or character type (core) | Default to `human` when only a profession is given. Describe build and distinctive features such as skin, horns, tusks, ears, or wings. |
+| `role` | Profession or identity (core) | Infer from the species and props where appropriate. A wand may suggest a shaman or mage. |
+| `outfit` | Clothing | Specify materials and layers consistent with role and faction. Add metal ornaments or gems only when supported by the character design. |
+| `weapon_prop` | Weapon or prop | Infer from the role when needed. Preserve the user's choice of prop and fill in material details. |
+| `pose` | Pose | Give the figure a clear silhouette and keep the face visible. A hand reaching toward the viewer can convey movement. |
+| `expression` | Expression | Match the faction and personality. Favor lively expressions such as a confident grin, bright smile, or fierce glare by default. |
+| `element_faction` | Element or faction | Infer from the props, clothing, and wording. Write `[main colors] color scheme with [complementary color] accents` under the shared rules §3. |
+| `background_magic` | Background or magical effects | May be empty. Use an environmental background for ordinary characters. Add small localized effects only when the subject calls for them, such as during spellcasting. Rune circles, starbursts, and glowing particles are optional. |
+| `framing` | Framing | Default to `half-body`. Use `full-body` when requested or when necessary to show a complete outfit or stance. |
+
+At least one of `race_type` and `role` must be identifiable. If both are unclear, ask for confirmation.
+
+Assemble the subject from `race_type` and `role`, for example `a muscular orc tribal shaman, grey-green skin, prominent tusks`. Append details in this order: `outfit`, `weapon_prop`, `pose`, `expression`, `element_faction`, `background_magic`.
+
+Use the applicable fixed composition template, replacing only the bracketed orientation:
+
+- Half-body: `[vertical|horizontal] half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible`
+- Full-body: `[vertical|horizontal] full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
+
+Use `style_lock.by_type.character.framing_override` verbatim. Default to vertical `2:3`. The character template also supports horizontal `5:4` for landscape or reference-frame compositions. For a user-specified ratio, follow §3 above.
+
+## 5. Protected details
+
+Preserve all strings in both locks, the composition template terms `single character` and `face fully visible` where applicable, explicit user details (including species, props, colors, hairstyle, and gender), and the matched asset's `description`, `locked_traits`, and `trigger_word`. Resolve conflicts under the shared rules §6.
+
+## 6. Output
+
+Follow the shared rules §9. Present the settings table in Traditional Chinese, followed by the JSON record and the copyable ChatGPT block from §12. Use the §4 keys for `fields` and the keys `style`, `character`, and `assets` for `suggested_loras`.
+
+### Optional standard illustration and rare alternate art
+
+1. Establish one character and form using §§3–4. Preserve the user's requirements and any matched asset description and locked traits. Write each identifying feature once in English, then copy it verbatim into the corresponding field and prompt for both versions. For grouped markings, specify their body location, count, and arrangement relative to the character's body. If an accent color is restricted to a location, name the color and its body part, object, or environmental feature in the same phrase in both prompts.
+2. Distinguish the alternate through an action, event, or camera angle. Choose poses and viewpoints that keep the identifying features visible in each standalone image. Keep the character in the same form. Leave lettering, frames, and rarity finishes such as foil or embossing to card production. If either version requires confirmation, hold both final prompts under the shared rules §§6–7.
+3. Present a Traditional Chinese comparison table of shared details, version-specific details, and their sources. Deliver the standard version first and the alternate second. Assemble each independently under the shared rules §§3–4 and give each the complete §9 record and §12 paste block. Use `skill: "character-art"`, `asset_type: "character"`, and the existing §4 fields in both. Describe each illustration fully, avoiding references to the other one. When saving under the shared rules §10, end the slugs with `-standard` and `-alt-art`, respectively.
+4. When the user requests image verification, generate each image independently from its complete text prompt. Count the markings, check their orientation, and inspect the placement of accent colors. Hide the version labels and identify the visible action or composition that distinguishes the two images. If a landscape detail should appear between limbs, inspect that exact opening. Record deviations in the first outputs.
+
+#### Choosing the alternate's subject and framing
+
+Choose one primary direction that fits the request, and express it through the existing fields. For action-led art, put a specific instant and the relevant body movement in `pose`, then frame the contact point or obstacle in `background_magic`. For quiet narrative art, identify a visible relationship between the character and an object, such as the gaze meeting a reflection or a tool joining two torn edges. Specify the evidence of the event, its location, and enough space to read it. Keep these directions optional within the same character workflow.
+
+Closer framing can support either direction. Describe the complete head surface, feature placement, and materials in both versions when these define identity, especially for masks and constructs. During verification, check for new hair, eyes, facial features, or accessories introduced by the model. Inspect color restrictions across clothing, props, and the environment as well as the body.
+
+For a reflection, verify the reflected marking and the intended intersection with a crack, ripple, or other detail. After hiding labels, ask the reviewer to describe the event before revealing the intended story. Record whether the visible event is recognizable, whether the exact spatial detail matches, and whether the character identity survives. Keep initial failures visible in the report alongside any later retries.
+
+## 7. Worked example
+
+Input: `An orc holding a magic wand`
+
+The table and explanatory notes below are English translations for this guide. In a live response, write the table and assumptions in Traditional Chinese, preserve the user's original input in `user_input`, and use English for prompt field values and both prompts.
+
+| Field | Setting | Source |
+|---|---|---|
+| Species | Orc | User |
+| Role | Tribal shaman | Inferred |
+| Outfit | Layered fur mantle, bone beads, crimson ritual sash with gold trim, leather bracers with orange gemstones | Inferred |
+| Prop | Magic wand of twisted wood with a faceted fire crystal and restrained inner glow | User specified the wand; material and crystal inferred |
+| Pose | Raises the wand and reaches toward the viewer with the other hand | Inferred |
+| Expression | Fierce, confident grin with bared tusks | Inferred |
+| Element or faction | Fire; orange and crimson with teal accents | Inferred |
+| Background | A few embers near the wand tip and a rocky canyon | Inferred |
+| Framing | Vertical 2:3 half-body portrait | Default |
 
 ```json
 {
   "skill": "character-art",
   "asset_type": "character",
-  "user_input": "我要生成一個獸人，拿著魔法棒",
+  "user_input": "An orc holding a magic wand",
   "needs_confirmation": false,
   "confirmation_reasons": [],
   "fields": {
@@ -115,8 +125,8 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
   },
   "auto_filled": ["role", "outfit", "pose", "expression", "element_faction", "background_magic", "framing"],
   "assumptions": [
-    "「獸人」解讀為 orc（奇幻常見譯法）；若你指的是獸耳族／獸族（beastfolk），請告訴我。",
-    "「魔法棒」保留為小型 magic wand，未改成大型法杖。"
+    "The example uses orc in the usual fantasy sense. The original term could also mean beastfolk.",
+    "The requested prop is a small magic wand."
   ],
   "matched_assets": [],
   "positive_prompt": "a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accents, a few embers near the wand tip, rocky canyon backdrop, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
@@ -135,52 +145,37 @@ description: Generate consistent vibrant fantasy TCG character illustrations fro
 }
 ```
 
-**ChatGPT 貼上用（`prompt_rules.md` §12）：**
-```text
-Create an image from this prompt, used as written:
+The complete `chatgpt_prompt` in the JSON above is the copyable §12 block, assembled mechanically from `positive_prompt`, `negative_prompt`, and `aspect_ratio`.
 
-a muscular orc tribal shaman, grey-green skin, prominent tusks, layered fur mantle, bone-bead necklaces, crimson ritual sash with gold trim, leather bracers set with orange gemstones, holding a gnarled wooden magic wand topped with a faceted fire crystal with a restrained inner glow, raising the wand overhead with one hand, the other hand reaching toward the viewer and channeling energy, fierce confident grin, bared tusks, fire element, blazing orange and crimson color scheme with teal accents, a few embers near the wand tip, rocky canyon backdrop, vertical half-body character portrait, single character, character as the clear focal point with a readable silhouette, face fully visible, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime character art, clean lineart, cel shading with soft gradients, expressive eyes with detailed highlights, soft hair highlights, dynamic diagonal composition, character fills the frame, detailed thematic environment background with atmospheric depth, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
+## 8. Test cases
 
-Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, chibi, super deformed
+### 1. Clear request
 
-Aspect ratio: 2:3 portrait (1024x1536)
-```
+Input: `A silver-haired elven archer, full-body, standing in moonlight`
 
-## 8. 測試範例
+Expect `needs_confirmation: false`. Attribute elf, archer, and full-body framing to the user. Preserve silver hair, express moonlight through palette and lighting, and keep the locked framing string intact. Omit gender when unspecified. Use the full-body composition and `2:3` ratio.
 
-### 測試 1：明確輸入（直接輸出）
+Expected prefix, followed by the locked style, style append, framing, and quality:
 
-**輸入：** `一位銀髮精靈弓箭手，全身，站在月光下`
+`a slender elf archer, long silver hair, pointed ears, fitted leather armor with engraved silver clasps, flowing hooded cloak, longbow of pale carved wood, quiver of fletched arrows, poised stance with an arrow half drawn, calm piercing gaze, moon faction, silver and moonlight blue color scheme with soft violet accents, cold moonlight from behind, softly lit woodland behind the figure, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
 
-**預期：**
-- `needs_confirmation: false`
-- `race_type` = elf（使用者）、`role` = archer（使用者）、`framing` = full-body（使用者）
-- 「銀髮」保留為 `silver hair`；「月光」轉成配色句與光線描述，不改動鎖定的 framing 字串
-- 未指定性別 → prompt 不寫性別
-- composition 使用 full-body 模板；`aspect_ratio: "2:3"`
-- 預期 prompt 前段（後面接固定的 style、style_append、framing、quality）：
-  `a slender elf archer, long silver hair, pointed ears, fitted leather armor with engraved silver clasps, flowing hooded cloak, longbow of pale carved wood, quiver of fletched arrows, poised stance with an arrow half drawn, calm piercing gaze, moon faction, silver and moonlight blue color scheme with soft violet accents, cold moonlight from behind, softly lit woodland behind the figure, vertical full-body character portrait, single character, character as the clear focal point with a readable silhouette, entire figure in frame from head to feet`
+### 2. Ambiguous request
 
-### 測試 2：模糊輸入（需確認）
+Input: `Draw a very powerful character`
 
-**輸入：** `幫我畫一個很強的角色`
+Expect `needs_confirmation: true` because both core fields are unclear. Show a proposed settings table and hold the final prompt. For example, propose a human knight in silver plate armor with gold trim and a crimson cape, pointing a steel greatsword forward with a confident expression. Specify a light element with gold and white colors and sky-blue accents, a temple in soft daylight, and half-body 2:3 framing.
 
-**預期：**
-- `needs_confirmation: true`；原因：`race_type` 與 `role` 都無法判斷
-- **不輸出最終 prompt**
-- 輸出「預計補全設定」表，例如：human／銀白板甲騎士（silver plate armor with gold trim, crimson cape）／鋼製巨劍／持劍前指的姿勢／自信表情／光元素（金白主色系、天藍互補色點綴）／柔和日光下的神殿背景／半身 2:3
-- 最多問 3 個問題：1) 種族或角色類型？ 2) 職業或戰鬥風格？ 3) 偏好的元素或陣營？
-- 使用者回覆「確認」或修改後，才產生完整輸出
+Ask up to three questions about species or type, profession or fighting style, and preferred element or faction. Produce the full output once the user confirms or corrects the settings.
 
-### 測試 3：與鎖定衝突
+### 3. Conflicts with the locks
 
-**輸入：** `兩個騎士在對戰，畫成 Q 版，上面寫上卡名「炎之誓約」`
+Input: `Two knights dueling, drawn in chibi style, with the card title "Oath of Flame" written on the image`
 
-**預期：**
-- `needs_confirmation: true`，列出 3 個衝突：
-  1. 兩個角色 ↔ 負面鎖定 `multiple characters` 與模板 `single character` → A（建議）：單一騎士做揮劍攻擊動作；B：本次例外移除 `multiple characters` 並放寬單角色規則
-  2. Q 版 ↔ 負面鎖定 `chibi, super deformed` 與 quality 的 `consistent proportions` → 屬畫風，不提供本次例外（`prompt_rules.md` §6）；保留鎖定，或明確要求修改 `style_lock.json`
-  3. 卡名文字 ↔ framing `no text` → 不提供例外；卡名應在卡框排版階段加入
-- 不可默默刪除 `multiple characters`，prompt 不可出現 `chibi`，不可把「炎之誓約」字樣放進 prompt
-- 使用者選 A 後：輸出單一騎士 prompt，可取「炎之誓約」的語意補全為 fire oath knight
+Expect `needs_confirmation: true`. Identify all three conflicts:
+
+1. Two knights conflict with the negative term `multiple characters` and the composition term `single character`. Under option A, propose one knight swinging a sword. Option B requires user approval to remove the negative term and relax the single-character rule for this prompt.
+2. The requested style conflicts with `chibi, super deformed` and `consistent proportions`. The style has no one-off exception under the shared rules §6. Offer the locked style or the permanent-change procedure for an explicit request to revise the style lock.
+3. The title conflicts with `no text`. Place the title during card layout. Keep the lock in force.
+
+Keep the conflicts visible for confirmation. Exclude the title and the requested chibi style from the positive prompt. If the user chooses A, produce a single knight and use the title's meaning as a visual theme, such as `fire oath knight`.
 
