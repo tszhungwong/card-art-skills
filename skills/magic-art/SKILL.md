@@ -3,101 +3,103 @@ name: magic-art
 description: Generate consistent vibrant fantasy TCG magic effect, skill effect and spell card illustrations from short user descriptions, using the shared card-art style lock.
 ---
 
-# magic-art：魔法效果／技能特效／法術卡立繪
+# magic-art: Magic effects, skill effects, and spell card art
 
-> 路徑皆相對於 `card-art-skills/`。本 skill 只決定「畫什麼」與「構圖」；「怎麼畫」一律來自 `shared/style_lock.json`。
+> Paths are relative to `card-art-skills/`. This skill determines only what to depict and the composition; how to draw comes entirely from `shared/style_lock.json`.
 
-## 1. 何時使用
+## 1. When to use
 
-**使用：** 要生成以「法術或特效本身」為主體的卡牌立繪，例如爆發、漩渦、光束、護盾、詛咒、召喚陣、治癒光、隕石雨。
-- 「我要生成一個火焰爆發魔法」
-- 「從天而降的雷電長槍」
+**Use:** For card art focused on a spell or effect itself, such as a burst, vortex, beam, shield, curse, summoning circle, healing light, or meteor rain.
+- “I want a fire burst spell.”
+- “A lightning spear descending from the sky.”
 
-**不使用（改用其他 skill）：**
-- 施法者才是主體，魔法只是陪襯 → `character-art`
-- 被召喚出的生物是主體 → `character-art`
-- 主體是法器本身 → `weapon-art`
-- 主體是被魔法改變的地點（例如被詛咒的森林）→ `scene-art`
-- 一次處理 CSV 多列 → `batch-generate`
+**Do not use (choose another skill):**
+- The caster is the subject and magic is secondary → `character-art`
+- The summoned creature is the subject → `character-art`
+- The magical implement itself is the subject → `weapon-art`
+- A location altered by magic is the subject (such as a cursed forest) → `scene-art`
+- Processing multiple CSV rows at once → `batch-generate`
 
-## 2. 必須讀取的共用檔案
+## 2. Required shared files
 
-每次執行前重新讀取：
-1. `shared/style_lock.json`（唯讀）：`style`、`quality`、`by_type.magic`（`style_append` 與 `framing_override`；核心細節、亮度控制與背景處理由這裡統一提供，並非所有元素都自發光）
-2. `shared/negative_lock.json`（唯讀）：`negative`、`append_by_type.magic`（排除角色特寫與難以辨識的特效輪廓）
-3. `shared/assets.json`：`magic_effects`、`loras.style`、`loras.magic`
-4. `shared/prompt_rules.md`
+Read again before each run:
+1. `shared/style_lock.json` (read-only): `style`, `quality`, `by_type.magic` (`style_append` and `framing_override`; core detail, luminance control, and background treatment are provided here consistently, and not every element emits light).
+2. `shared/negative_lock.json` (read-only): `negative`, `append_by_type.magic` (excludes character close-ups and unreadable effect silhouettes).
+3. `shared/assets.json`: `magic_effects`, `loras.style`, `loras.magic`.
+4. `shared/prompt_rules.md`.
 
-## 3. 如何解析使用者輸入
+## 3. Parsing user input
 
-1. 拆出使用者明確提供的元素、形態、顏色、施法來源、生物，對應到 §4 欄位。
-2. 比對 `assets.json → magic_effects` 的 `name`／`aliases`／`id`，命中時帶入資產設定。
-3. 抽出排除需求，英譯後加入負面 prompt。
-4. 判斷是否加入生物：使用者提到、或元素有代表性的化身（火 → 火鳥、雷 → 雷獸）時可加；生物可與特效共同成為主體（施放特效或被特效包圍），此時 composition 用「有生物」模板。人形施法者預設只露手或背光剪影；若使用者想強調施法者的臉，屬於 skill 歸屬不明（`prompt_rules.md` §7 第 4 點），需確認。
-5. 檢查衝突，判斷是否需確認，然後補全並組裝。
+1. Extract explicitly provided elements, forms, colors, casting sources, and creatures, mapping them to §4 fields.
+2. Match `name`/`aliases`/`id` in `assets.json → magic_effects` and include the asset settings when matched.
+3. Extract exclusions, translate them into English, and add them to the negative prompt.
+4. Decide whether to include a creature: one may be added if the user mentions it or if the element has a representative avatar (fire → firebird, lightning → thunder beast). The creature can share the focal point with the effect, casting it or surrounded by it; use the creature composition template. By default, show only the hands or a backlit silhouette of a humanoid caster. If the user wants the caster's face emphasized, skill routing is unclear (`prompt_rules.md` §7 item 4), so ask for confirmation.
+5. Check conflicts and whether confirmation is required, then complete and assemble.
 
-## 4. 必須補全的欄位
+## 4. Fields to complete
 
-| key | 欄位 | 核心 | 補全原則（英文寫入 prompt） |
+| key | Field | Core | Completion rule (write in English in the prompt) |
 |---|---|---|---|
-| `element` | 魔法元素 | ★ | fire, frost, lightning, shadow, holy light, poison, arcane, earth, wind, water… |
-| `form` | 效果形態 | ★ | burst, vortex, beam, spear, shield dome, chains, summoning circle, meteor rain… |
-| `color` | 顏色 | | 配色句：`[元素主色系] color scheme with [互補色] accents` |
-| `lighting` | 光線 | | 依元素決定：火、雷、聖光可作局部主光源，寫明照亮範圍並保留核心細節；土、風、水等預設接受環境光，不強制白熱核心或自發光 |
-| `particles_runes` | 粒子或符文 | | 依題材選擇少量 embers、ice shards 或 debris；可為空字串，不為裝飾自動添加發光符文或星芒 |
-| `source` | 施法來源 | | 預設無可見施法者：魔法陣、地面、天空裂縫、法器尖端；要有施法者時只露手或背光剪影 |
-| `creature` | 相關生物（選填） | | 施法者、受術者或特效化身的生物（phoenix, thunder beast, sea serpent）；體型可大，可與特效共同成為主體（生物施放特效或被特效包圍）；不做臉部特寫 |
-| `background` | 背景 | | 一句環境暗示（storm clouds, ocean surface, cavern, battlefield）；亮暗依元素決定，動態模糊由 framing 提供 |
-| `framing` | 構圖 | | 特效為中心焦點（或與生物共同焦點）、形狀可辨識 |
+| `element` | Magic element | ★ | fire, frost, lightning, shadow, holy light, poison, arcane, earth, wind, water… |
+| `form` | Effect form | ★ | burst, vortex, beam, spear, shield dome, chains, summoning circle, meteor rain… |
+| `color` | Color | | Color scheme sentence: `[element primary colors] color scheme with [complementary color] accents` |
+| `lighting` | Lighting | | Follow the element: fire, lightning, and holy light can act as local primary light sources; specify the illuminated area and retain core detail. Earth, wind, and water normally receive ambient light; do not require a white-hot core or emission. |
+| `particles_runes` | Particles or runes | | Select a few embers, ice shards, or debris appropriate to the subject; may be empty. Do not automatically add glowing runes or starbursts as decoration. |
+| `source` | Casting source | | By default no caster is visible: magic circle, ground, rift in the sky, or tip of a magical implement. When a caster is included, show only hands or a backlit silhouette. |
+| `creature` | Related creature (optional) | | A creature as caster, recipient, or effect avatar (phoenix, thunder beast, sea serpent); it may be large and share the focal point with the effect, casting it or surrounded by it. Avoid facial close-ups. |
+| `background` | Background | | One environmental cue (storm clouds, ocean surface, cavern, battlefield); brightness depends on the element, and framing supplies motion blur. |
+| `framing` | Composition | | The effect is the central focal point (or shares it with a creature), with a readable shape. |
 
-**核心規則：** `element` 與 `form` 至少要能判斷一項，否則需確認。
+**Core rule:** At least one of `element` and `form` must be identifiable; otherwise ask for confirmation.
 
-**組裝對應（`prompt_rules.md` §3）：**
-- subject：`a [element] [form] spell effect`
-- details：`form` 的細節 → `color` → `lighting` → `particles_runes` → `source` → `creature`（若有）→ `background`
-- composition（固定模板，依是否有生物擇一，只替換 `[ ]`）：
-  - 純特效：`[vertical|horizontal] composition, spell effect as the central focal point, clear readable shape of the [form noun], energy radiating outward from the center`
-  - 有生物：`[vertical|horizontal] composition, [creature noun] and its spell effect as the shared focal point, clear readable shape of the [form noun], energy radiating outward`
-- framing：使用 `style_lock.by_type.magic.framing_override`（逐字）
-- 比例：預設 `2:3`；配合參考圖框 `5:4`。
+**Assembly mapping (`prompt_rules.md` §3):**
+- subject: `a [element] [form] spell effect`
+- details: `form` details → `color` → `lighting` → `particles_runes` → `source` → `creature` (if present) → `background`
+- composition (choose one fixed template based on whether a creature is present; replace only `[ ]`):
+  - Effect only: `[vertical|horizontal] composition, spell effect as the central focal point, clear readable shape of the [form noun], energy radiating outward from the center`
+  - With creature: `[vertical|horizontal] composition, [creature noun] and its spell effect as the shared focal point, clear readable shape of the [form noun], energy radiating outward`
+- framing: use `style_lock.by_type.magic.framing_override` verbatim.
+- Aspect ratio: default `2:3`; use `5:4` to fit the reference art frame.
 
-## 5. 不可擅自更改的欄位
+## 5. Fields that must not be changed without authorization
 
-- `style_lock.json`、`negative_lock.json` 的所有字串（包含 magic 的 framing override 與追加負面詞）
-- composition 模板中的焦點句（純特效或有生物，兩種版本擇一）
-- 使用者明確指定的元素、形態、顏色、施法來源、生物
-- 命中資產的 `description`、`locked_traits`、`trigger_word`
+- All strings in `style_lock.json` and `negative_lock.json` (including the magic framing override and appended negative terms).
+- The focal-point sentence in the composition template (choose either effect-only or creature version).
+- Elements, forms, colors, casting sources, and creatures explicitly specified by the user.
+- A matched asset's `description`, `locked_traits`, and `trigger_word`.
 
-## 6. 輸出格式
+## 6. Output format
 
-依 `prompt_rules.md` §9。`fields` 使用 §4 的 key；`suggested_loras` 的鍵為 `style`、`magic`、`assets`。
+Follow `prompt_rules.md` §9. Use the keys from §4 in `fields`; the `suggested_loras` keys are `style`, `magic`, and `assets`.
 
-## 7. 範例輸入與範例輸出
+## 7. Example input and output
 
-**輸入：**
+The example is translated for documentation; actual user-facing explanations and assumptions remain in Traditional Chinese under the shared rules.
+
+**Input:**
 ```
-我要生成一個火焰爆發魔法
+I want a fire burst spell
 ```
 
-**輸出：**
+**Output:**
 
-| 欄位 | 設定 | 來源 |
+| Field | Setting | Source |
 |---|---|---|
-| 魔法元素 | 火焰 | 使用者 |
-| 效果形態 | 爆發：從單一點向外的放射狀火焰噴發 | 使用者＋細節補全 |
-| 顏色 | 熾橘與深紅主色系，電光藍互補色點綴 | 自動補全 |
-| 光線 | 火焰照亮附近煙霧，亮度受控且火焰內層清楚 | 自動補全 |
-| 粒子或符文 | 少量飛散火星與熔融液滴 | 自動補全 |
-| 施法來源 | 焦土上碎裂的符文陣 | 自動補全 |
-| 相關生物 | 無 | 預設 |
-| 背景 | 煙霧瀰漫的焦土戰場 | 自動補全 |
-| 構圖 | 直向 2:3，效果居中 | 預設 |
+| Magic element | Fire | User |
+| Effect form | Burst: a radial eruption of flames outward from a single point | User + completed detail |
+| Color | Blazing orange and crimson primary colors with electric blue complementary accents | Automatically completed |
+| Lighting | Flames light nearby smoke, with controlled brightness and visible inner flame layers | Automatically completed |
+| Particles or runes | A few flying embers and molten droplets | Automatically completed |
+| Casting source | A fractured runic circle on scorched ground | Automatically completed |
+| Related creature | None | Default |
+| Background | Smoky, scorched battlefield | Automatically completed |
+| Composition | Vertical 2:3, effect centered | Default |
 
 ```json
 {
   "skill": "magic-art",
   "asset_type": "magic",
-  "user_input": "我要生成一個火焰爆發魔法",
+  "user_input": "I want a fire burst spell",
   "needs_confirmation": false,
   "confirmation_reasons": [],
   "fields": {
@@ -112,7 +114,7 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
     "framing": "vertical, effect centered, pure effect template"
   },
   "auto_filled": ["color", "lighting", "particles_runes", "source", "creature", "background", "framing"],
-  "assumptions": ["未指定施法者或生物：以地面符文陣作為施法來源，不畫角色或生物。若想加入火鳥等化身，請告訴我。"],
+  "assumptions": ["No caster or creature was specified: use a ground runic circle as the source, with no character or creature depicted. Tell me if you want an avatar such as a firebird."],
   "matched_assets": [],
   "positive_prompt": "a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accents, the flames lighting nearby smoke with controlled brightness and visible inner flame layers, a few flying embers and molten droplets, erupting from a fractured runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element, explosive dynamic composition, effect fills most of the frame, element-appropriate background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration",
   "negative_prompt": "extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, character portrait focus, face close-up, indistinct effect silhouette",
@@ -130,48 +132,38 @@ description: Generate consistent vibrant fantasy TCG magic effect, skill effect 
 }
 ```
 
-**ChatGPT 貼上用（`prompt_rules.md` §12）：**
-```text
-Create an image from this prompt, used as written:
+**ChatGPT paste block:** Use the example JSON's `chatgpt_prompt` verbatim in a text block, as required by `prompt_rules.md` §12.
 
-a fire burst spell effect, explosive radial eruption of flames bursting outward from a single point, blazing orange and crimson color scheme with electric blue accents, the flames lighting nearby smoke with controlled brightness and visible inner flame layers, a few flying embers and molten droplets, erupting from a fractured runic circle on scorched ground, smoky scorched battlefield in the background, vertical composition, spell effect as the central focal point, clear readable shape of the burst, energy radiating outward from the center, vibrant fantasy trading card game illustration, Japanese TCG art style, anime-influenced digital painting, smooth gradient shading with crisp clean edges, vivid saturated colors, element-themed color scheme with complementary color accents, soft directional lighting, restrained material-specific highlights, balanced exposure, localized emission only from actual light sources, professional TCG card art, anime-style magic VFX, clearly defined effect shapes, layered color and texture, controlled luminance preserving core detail, emission appropriate to the spell's element, explosive dynamic composition, effect fills most of the frame, element-appropriate background with motion blur, no card frame, no text, no watermark, no UI, highly detailed, clean anatomy, consistent proportions, crisp edges, game-ready card illustration
+## 8. Test examples
 
-Avoid: extra limbs, extra fingers, deformed hands, bad anatomy, distorted face, blurry subject, low detail, jpeg artifacts, text, letters, watermark, signature, UI, card frame, border, cluttered background, multiple characters, awkward cropping, cut-off head, dull muted colors, desaturated, muddy colors, photorealistic, 3d render, excessive bloom, blown-out highlights, excessive decorative sparkles, glowing outlines on non-emissive surfaces, character portrait focus, face close-up, indistinct effect silhouette
+### Test 1: Clear input (direct output)
 
-Aspect ratio: 2:3 portrait (1024x1536)
-```
+**Input:** `A lightning spear falls from the sky and strikes the ground`
 
-## 8. 測試範例
-
-### 測試 1：明確輸入（直接輸出）
-
-**輸入：** `從天而降的雷電長槍，擊中地面`
-
-**預期：**
+**Expected:**
 - `needs_confirmation: false`
-- `element` = lightning、`form` = 長槍形雷擊（使用者）；施法來源補為天空中裂開的雲層
-- 直向 2:3 正好符合由上而下的動線
-- 預期 prompt 前段：
+- `element` = lightning, `form` = spear-shaped lightning strike (user); complete the casting source as a split in the clouds.
+- Vertical 2:3 suits the top-to-bottom movement.
+- Expected beginning of the prompt:
   `a lightning spear spell effect, a massive spear-shaped bolt of lightning plunging from the sky and striking the ground, electric yellow and white color scheme with violet accents, the impact flash lighting up the cracked earth, scattering sparks and shattered rock fragments, charred fissures branching across the ground from the impact point, descending from a split in dark storm clouds, stormy sky in the background, vertical composition, spell effect as the central focal point, clear readable shape of the spear, energy radiating outward from the center`
 
-### 測試 2：模糊輸入（需確認）
+### Test 2: Ambiguous input (confirmation required)
 
-**輸入：** `一個很厲害的魔法`
+**Input:** `A very powerful spell`
 
-**預期：**
-- `needs_confirmation: true`；原因：`element` 與 `form` 都無法判斷
-- **不輸出最終 prompt**
-- 輸出「預計補全設定」表，例如：暗影元素／漩渦／深紫與洋紅主色系、金色互補色點綴／地面魔法陣／2:3
-- 問題（最多 3 個）：1) 元素？ 2) 效果形態（爆發、光束、護盾、召喚陣…）？ 3) 要不要加入生物化身？
+**Expected:**
+- `needs_confirmation: true`; reason: neither `element` nor `form` can be determined.
+- **Do not output a final prompt.**
+- Provide a proposed settings table, for example: shadow element / vortex / deep purple and magenta primary colors with gold complementary accents / ground magic circle / 2:3.
+- Questions (at most 3): 1) Element? 2) Effect form (burst, beam, shield, summoning circle…)? 3) Include a creature avatar?
 
-### 測試 3：skill 歸屬不明
+### Test 3: Unclear skill routing
 
-**輸入：** `一位法師施放治癒之光，要看得到法師的臉`
+**Input:** `A mage casts healing light; the mage's face should be visible`
 
-**預期：**
-- `needs_confirmation: true`；原因：主體可能是魔法也可能是角色（`prompt_rules.md` §7 第 4 點）
-- 選項：
-  - A（建議）：維持 `magic-art`，治癒光柱為主體，法師在下方呈背光半身剪影，臉部可見但佔畫面比例小（不違反 `face close-up`，不需要例外）
-  - B：改用 `character-art`，法師為主體，治癒光作為 `background_magic`
-- 不可默默把法師臉部特寫放進 magic prompt
-
+**Expected:**
+- `needs_confirmation: true`; reason: the focus could be either the spell or the character (`prompt_rules.md` §7 item 4).
+- Options:
+  - A (recommended): Keep `magic-art`, with the healing light column as the focus and the mage as a backlit half-body silhouette below it. The face is visible but occupies a small portion of the image (does not violate `face close-up` and requires no exception).
+  - B: Switch to `character-art`, with the mage as the subject and healing light as `background_magic`.
+- Do not silently add a facial close-up of the mage to a magic prompt.
